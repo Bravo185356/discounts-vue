@@ -1,0 +1,132 @@
+.profile {
+    font-family: 'Montserrat', sans-serif;
+}
+.profile__header {
+    display: flex;
+    justify-content: space-between;
+    @include adaptiveValue('margin-bottom', 60, 28, 0);
+    @include adaptiveValue('padding-top', 80, 48, 0);
+}
+.profile__title {
+    &.title {
+        text-align: left;
+    }
+}
+.profile__exit {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: #333333;
+    font-size: 20px;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.profile__body {
+    display: flex;
+    align-items: start;
+    @include adaptiveValue('gap', 44, 15, 0);
+}
+.profile__sections {
+    position: relative;
+    background: #FFFFFF;
+    box-shadow: 0px 12px 28px rgba(177, 177, 177, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    flex: 0 1 29%;
+}
+.profile__info,
+.profile__subs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    padding: 13px 0px 11px 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    &.active-section {
+        background: #F7F7F7;
+        border-radius: 8px;
+        &::before {
+            color: #1749b3;
+        }
+    }
+    &::before {
+        font-size: 18px;
+    }
+}
+.profile__info {
+    position: relative;
+    ._icon-arrow {
+        display: none;
+    }
+
+}
+.info-card {
+    flex: 1 1 auto;
+    background: #FFFFFF;
+    box-shadow: 0px 12px 28px rgba(244, 245, 245, 0.2);
+    border-radius: 32px;
+    @include adaptiveValue('padding', 40, 20, 0);
+}
+.info-card__title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0D0B10;
+    margin-bottom: 40px;
+}
+.info-card__form {
+    display: grid;
+    row-gap: 32px;
+}
+.info-form {
+}
+.info-form__item {
+}
+.info-card__label {
+    display: block;
+    margin-bottom: 12px;
+}
+.info-card__input {
+}
+.info-from__save {
+    width: 100%;
+}
+.subs-card {
+}
+.subs-card__body {
+    display: grid;
+    row-gap: 10px;
+}
+.subs-card__item {
+    background-color: white;
+    overflow: hidden;
+    border-radius: 32px;
+}
+.subs-card__service-name {
+    padding: 69px 0px 69px 40px;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    &.spotify {
+        background-color: #1ED760;
+    }
+    &.youtube {
+        background-color: #FE0000;
+    }
+}
+.subs-card__content {
+    padding: 32px 40px 32px 40px;
+}
+.subs-card__description {
+    margin-bottom: 24px;
+    font-size: 18px;
+    line-height: 25px;
+}
+.subs-card__change {
+    color: #333333;
+    font-size: 18px;
+    &:hover {
+        text-decoration: underline;
+    }
+}

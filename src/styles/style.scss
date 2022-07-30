@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,600;1,400&family=Inter:wght@400;500;600;700&family=Manrope:wght@600&family=Montserrat:wght@400;500;600&display=swap');
+@import 'mixins.scss';
+@import '_header.scss';
+@import '_start.scss';
+@import '_subscribe.scss';
+@import '_howWorks.scss';
+@import '_invite.scss';
+@import '_about.scss';
+@import '_faq.scss';
+@import '_footer.scss';
+@import '_popupsStyles.scss';
+@import '_profilePage.scss';
+@import '_subscribePlans.scss';
+
+.blue-button,
+.black-button,
+.white-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    font-weight: 700;
+    font-size: 16px;
+    transition: color 0.2s ease, background 0.2s ease;
+    border-radius: 12px;
+}
+.blue-button {
+    background: #1749B3;
+    color: white;
+    &:hover {
+        background: white;
+        border: 1px solid #1749B3;
+        color: #171717;
+    }
+    &:active {
+        background: #4B84FD;
+        border: 0;
+    }
+}
+.black-button {
+    background: #333333;
+    color: white;
+    &:hover {
+        background: white;
+        border: 1px solid #333333;
+        color: #171717;
+    }
+    &:active {
+        background: #606060;
+        border: 0;
+        color: white;
+    }
+}
+.white-button {
+    background: white;
+    border: 1px solid #1749B3;
+    color: #1749B3;
+    &:hover {
+        background: #1749B3;
+        border: 0;
+        color: white;
+    }
+    &:active {
+        background: #4B84FD;
+        border: 0;
+        color: white;
+    }
+}
+.wrapper {
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+    background: #ECF3FB;
+}
+[class*="__container"] {
+    max-width: 1220px;
+    margin: 0px auto;
+    padding: 0px 10px;
+}
+.main {
+    background-color: #ECF3FB;
+}
+._lock {
+    overflow: hidden;
+}
+.title {
+    font-size: 32px;
+    line-height: 44px;
+    text-align: center;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+}
+.sub-request {
+    @include adaptiveValue('margin-top', 120, 60, 0);
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+.sub-request__body {
+    display: flex;
+    align-items: center;
+    background-color: #1749B3;
+    border-radius: 24px;
+    padding: 40px 20px;
+    @include adaptiveValue('gap', 80, 20, 0);
+}
+
+.sub-request__title {
+    font-size: 22px;
+    line-height: 31px;
+    margin-bottom: 21px;
+    font-weight: 700;
+}
+.sub-request__additional-subs {
+    font-size: 16px;
+    line-height: 24px;
+
+}
+.sub-request__button {
+    flex-shrink: 0;
+    @include adaptiveValue('width', 287, 236,0);
+    background-color: white;
+    border-radius: 12px;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    font-weight: 700;
+}
+.drop-menu {
+    position: absolute;
+    min-width: 100%;
+    background-color: white;
+    transition: all 0.2s ease;
+    box-shadow: 0px 20px 48px rgba(177, 177, 177, 0.4);
+    border-radius: 16px;
+    padding: 24px;
+    &.spoller-active {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+.loading-block {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    font-size: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    z-index: 1000;
+}
+.input {
+    width: 100%;
+    height: 54px;
+    background-color: #F1F4F8;
+    border-radius: 12px;
+    font-size: 17px;
+    line-height: 22px;
+    color: #8F8F8F;
+    padding-left: 20px;
+}
+@import '_media.scss';

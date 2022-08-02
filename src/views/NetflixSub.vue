@@ -11,7 +11,7 @@
                 <div class="plans__title title">{{ sub.name }}</div>
                 <div class="plans-advantages">
                     <ul  class="plans-advantages__list">
-                        <li v-for="advantage in sub.advantages" class="plans-advantages__item">{{ advantage }}</li>
+                        <li v-for="advantage in sub.advantages" class="plans-advantages__item _icon-check">{{ advantage }}</li>
                     </ul>
                 </div>
                 <div class="plans__price"><span>$</span>{{ subscribeDuration === '6' ? sub.price : Math.round(sub.price * 1.85) }}</div>

@@ -44,13 +44,10 @@
     .menu {
         display: none;
     }
-
-    .burger-menu,
-    .burger-menu__body,
-    .header__name {
+    .header__name,
+    .burger-menu {
         display: block;
     }
-
     .subscribe-item__image img {
         object-fit: cover;
         border-radius: 32px;
@@ -148,7 +145,6 @@
         align-items: center;
         flex-direction: column;
     }
-    
 }
 @media (max-width: 450px) {
     .popup {
@@ -167,9 +163,6 @@
             }
         }
     }
-    .popup__close {
-        display: none;
-    }
     .popup-form__buttons {
         flex-direction: column-reverse;
         gap: 20px;
@@ -186,7 +179,7 @@
             width: 100%;
         }
     }
-    .profile__info ._icon-arrow {
+    .profile__section ._icon-arrow {
         display: flex;
         position: absolute;
         align-items: center;

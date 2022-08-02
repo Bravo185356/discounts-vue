@@ -35,8 +35,7 @@
     padding: 15px;
     flex: 0 1 29%;
 }
-.profile__info,
-.profile__subs {
+.profile__section {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -44,6 +43,10 @@
     padding: 13px 0px 11px 20px;
     white-space: nowrap;
     cursor: pointer;
+    &:hover {
+        background: #F7F7F7;
+        border-radius: 8px;
+    }
     &.active-section {
         background: #F7F7F7;
         border-radius: 8px;
@@ -55,7 +58,7 @@
         font-size: 18px;
     }
 }
-.profile__info {
+.profile__section {
     position: relative;
     ._icon-arrow {
         display: none;
@@ -79,20 +82,12 @@
     display: grid;
     row-gap: 32px;
 }
-.info-form {
-}
-.info-form__item {
-}
 .info-card__label {
     display: block;
     margin-bottom: 12px;
 }
-.info-card__input {
-}
 .info-from__save {
     width: 100%;
-}
-.subs-card {
 }
 .subs-card__body {
     display: grid;

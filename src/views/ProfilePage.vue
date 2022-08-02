@@ -1,121 +1,164 @@
 <template lang="">
-    <section class="profile" v-if="isLogined">
-      <div class="profile__header">
-        <div class="profile__title title">Personal data management</div>
-        <router-link to="/" class="profile__exit _icon-profile-exit"
-          >Exit the office</router-link
-        >
-      </div>
-      <div class="profile__body">
-        <div class="profile__sections">
+  <section class="profile" v-if="isLogined">
+    <div class="profile__header">
+      <div class="profile__title title">Personal data management</div>
+      <router-link to="/" class="profile__exit _icon-profile-exit"
+        >Exit the office</router-link
+      >
+    </div>
+    <div class="profile__body">
+      <div class="profile__sections">
+        <!-- width 450+ -->
+        <div v-if="!isMobile" class="sections">
           <div
-            @click="activeSection = 'Info'"
-            :class="{ 'active-section': activeSection === 'Info' }"
-            class="profile__info _icon-settings _icon-arrow"
+            @click="activeSection = section"
+            v-for="section in sectionList"
+            :class="section.icon"
+            class="profile__section _icon-arrow"
           >
-            Account Info
+            {{ section.name }}
+            <span
+              @click.stop="profileSectionsDropActive = !profileSectionsDropActive"
+              class="_icon-arrow"
+            ></span>
+          </div>
+        </div>
+        <!-- Для мобилок -->
+        <div v-else class="sections-mobile">
+          <div :class="activeSection.icon" class="profile__section _icon-arrow">
+            {{ activeSection.name }}
             <span
               @click.stop="profileSectionsDropActive = !profileSectionsDropActive"
               class="_icon-arrow"
             ></span>
           </div>
           <ul v-if="profileSectionsDropActive" class="profile__sections-list">
-            <div
-              @click="activeSection = 'Subscriptions'"
-              :class="{ 'active-section': activeSection === 'Subscriptions' }"
-              class="profile__subs _icon-subscriptions"
+            <li
+              v-for="section in nonActiveElements"
+              @click="changeActiveSection(section)"
+              class="profile__section"
+              :class="section.icon"
             >
-              My subscriptions
-            </div>
+              {{ section.name }}
+            </li>
           </ul>
         </div>
-        <div v-if="activeSection === 'Info'" class="info-card">
-          <div class="info-card__title">Account info</div>
-          <div class="info-card__alert" v-if="currentUser.emailVerified === false">У вас не подтверждена почта!</div>
-          <form class="info-card__form info-form">
-            <div class="info-form__item">
-              <label for="info-card-id" class="info-card__label">ID user</label>
-              <input id="info-card-id" class="info-card__input input" :value="currentUser.localId" />
-            </div>
-            <div class="info-form__item">
-              <label for="info-card-id" class="info-card__label"
-                >How can I call you?</label
-              >
-              <input
-                id="info-card-id"
-                class="info-card__input input"
-                placeholder="Enter your name"
-              />
-            </div>
-            <div class="info-form__item">
-              <label for="info-card-id" class="info-card__label">E-mail</label>
-              <input
-                id="info-card-id"
-                class="info-card__input input"
-                placeholder="Enter your e-mail"
-                :value="currentUser.email"
-              />
-            </div>
-            <button type="submit" class="info-from__save blue-button">
-              Save changes
-            </button>
-          </form>
+      </div>
+      <div v-if="activeSection.name === 'Account Info'" class="info-card">
+        <div class="info-card__title">Account info</div>
+        <div class="info-card__alert" v-if="currentUser.emailVerified === false">
+          У вас не подтверждена почта!
         </div>
-        <div v-if="activeSection === 'Subscriptions'" class="subs-card">
-          <div class="subs-card__body">
-            <div class="subs-card__item">
-              <div class="subs-card__service-name spotify">Spotify Premium Duo</div>
-              <div class="subs-card__content">
-                <div class="subs-card__description">
-                  Two separate Premium accounts for people who live together.
-                </div>
-                <a href="#" class="subs-card__change">Change plan</a>
+        <form class="info-card__form info-form">
+          <div class="info-form__item">
+            <label for="info-card-id" class="info-card__label">ID user</label>
+            <input
+              id="info-card-id"
+              class="info-card__input input"
+              :value="currentUser.localId"
+            />
+          </div>
+          <div class="info-form__item">
+            <label for="info-card-id" class="info-card__label">How can I call you?</label>
+            <input
+              id="info-card-id"
+              class="info-card__input input"
+              placeholder="Enter your name"
+            />
+          </div>
+          <div class="info-form__item">
+            <label for="info-card-id" class="info-card__label">E-mail</label>
+            <input
+              id="info-card-id"
+              class="info-card__input input"
+              placeholder="Enter your e-mail"
+              :value="currentUser.email"
+            />
+          </div>
+          <button type="submit" class="info-from__save blue-button">Save changes</button>
+        </form>
+      </div>
+      <div v-if="activeSection.name === 'My subscriptions'" class="subs-card">
+        <div class="subs-card__body">
+          <div class="subs-card__item">
+            <div class="subs-card__service-name spotify">Spotify Premium Duo</div>
+            <div class="subs-card__content">
+              <div class="subs-card__description">
+                Two separate Premium accounts for people who live together.
               </div>
+              <a href="#" class="subs-card__change">Change plan</a>
             </div>
-            <div class="subs-card__item">
-              <div class="subs-card__service-name youtube">YouTube Premium</div>
-              <div class="subs-card__content">
-                <div class="subs-card__description">
-                  YouTube and YouTube Music without ads, in the background and offline
-                </div>
-                <a href="#" class="subs-card__change">Change plan</a>
+          </div>
+          <div class="subs-card__item">
+            <div class="subs-card__service-name youtube">YouTube Premium</div>
+            <div class="subs-card__content">
+              <div class="subs-card__description">
+                YouTube and YouTube Music without ads, in the background and offline
               </div>
+              <a href="#" class="subs-card__change">Change plan</a>
             </div>
           </div>
         </div>
       </div>
-      <invite-friends></invite-friends>
-    </section>
-    <div v-else class="">Вы не залогинены!</div>
+    </div>
+    <invite-friends></invite-friends>
+  </section>
+  <div v-else class="">Вы не залогинены!</div>
 </template>
 <script>
 import InviteFriends from "../components/InviteFriends.vue";
 export default {
   props: {
     isLogined: Boolean,
-    currentUser: Object
+    currentUser: Object,
   },
   components: {
     InviteFriends,
   },
   data() {
     return {
-      activeSection: "Info",
+      activeSection: {
+        name: "Account Info",
+        icon: "_icon-settings",
+      },
+      sectionList: [
+        { name: "Account Info", icon: "_icon-settings" },
+        { name: "My subscriptions", icon: "_icon-subscriptions" }
+      ],
       profileSectionsDropActive: false,
+      screenWidth: 0,
     };
   },
   methods: {
     changeScreenWidth() {
+      this.screenWidth = screen.width;
       screen.width >= 450
         ? (this.profileSectionsDropActive = true)
         : (this.profileSectionsDropActive = false);
     },
+    changeActiveSection(section) {
+      this.activeSection = section;
+      if (screen.width <= 450) {
+        this.profileSectionsDropActive = false;
+      }
+    }
+  },
+  computed: {
+    isMobile() {
+      return this.screenWidth <= 450 ? true : false;
+    },
+    nonActiveElements() {
+      return this.sectionList.filter(
+        (item) => item.name !== this.activeSection.name
+      );
+    }
   },
   async mounted() {
     window.addEventListener("resize", this.changeScreenWidth);
+
     this.changeScreenWidth();
-    console.log(this.$route.params.id)
-    if(this.isLogined) {
+
+    if (this.isLogined) {
       let response = await fetch(
         `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${this.API_KEY}`,
         {
@@ -126,7 +169,7 @@ export default {
           "Content-Type": "application/json",
         }
       );
-      let userInfo = await response.json()
+      let userInfo = await response.json();
     }
   },
   destroyed() {
@@ -134,4 +177,3 @@ export default {
   },
 };
 </script>
-<style lang=""></style>

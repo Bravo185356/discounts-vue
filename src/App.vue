@@ -1,8 +1,8 @@
 <template lang="">
-  <div class="wrapper">
-    <page-header :userID="currentUser" :isLogined="isLogined" @logout="logout" @popup-open="popupOpen"></page-header>
+  <div class="wrapper" :class="{ '_lock': pageLock }">
+    <page-header @page-lock="pageLock = !pageLock" :userID="currentUser" :isLogined="isLogined" @logout="logout" @popup-open="popupOpen"></page-header>
     <div class="wrapper__container">
-      <router-view :isLogined="isLogined" :currentUser="currentUser"></router-view>
+      <router-view :currentUser="currentUser" :isLogined="isLogined"></router-view>
     </div>
     <page-footer></page-footer>
     <auth-popups :apiKey="API_KEY" :popup="activePopup" @success-login="successLogin" @change-popup="popupOpen" @close-popup="activePopup = ''"></auth-popups>
@@ -24,6 +24,7 @@ export default {
       activePopup: "",
       API_KEY: "AIzaSyCRYrVhJoaW0yinGmIi-MR9GMOzWBpaTZg",
       currentUser: {},
+      pageLock: false
     };
   },
   methods: {

@@ -71,6 +71,11 @@
     font-family: 'Montserrat', sans-serif;
     position: relative;
     background: #ECF3FB;
+    &._lock {
+        height: 100vh;
+        overflow: hidden;
+    }
+    
 }
 [class*="__container"] {
     max-width: 1220px;
@@ -79,9 +84,6 @@
 }
 .main {
     background-color: #ECF3FB;
-}
-._lock {
-    overflow: hidden;
 }
 .title {
     font-size: 32px;

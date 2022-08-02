@@ -1,6 +1,6 @@
 <template>
   <div class="subscribe-plans">
-    <div class="subscribe-plans__title title">Choose a Netflix Plan</div>
+    <div class="subscribe-plans__title title">Choose a Spotify Plan</div>
     <div class="subscribe-plans__description">
       Listen without limits at a bargain price
     </div>
@@ -25,7 +25,7 @@
         <div class="plans__title title">{{ sub.name }}</div>
         <div class="plans-advantages">
           <ul class="plans-advantages__list">
-            <li v-for="advantage in sub.advantages" class="plans-advantages__item">
+            <li v-for="advantage in sub.advantages" class="plans-advantages__item _icon-check">
               {{ advantage }}
             </li>
           </ul>

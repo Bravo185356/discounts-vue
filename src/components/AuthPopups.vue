@@ -1,6 +1,6 @@
 <template lang="">
   <Transition name="popup">
-    <div v-if="popup === 'login'" class="popup login" data-popup="login">
+    <div v-if="popup === 'login'" class="popup login" :class="{ 'popup-open': popup === 'login' }" data-popup="login">
       <div class="popup__body">
         <div class="popup__content">
           <div class="popup__header">
@@ -73,7 +73,7 @@
     </div>
   </Transition>
   <Transition name="popup">
-    <div v-if="popup === 'registration'" class="popup registration" data-popup="create">
+    <div v-if="popup === 'registration'" class="popup registration" :class="{ 'popup-open': popup === 'registration' }" data-popup="create">
       <div class="popup__body">
         <div class="popup__content">
           <div class="popup__header">

@@ -99,7 +99,17 @@
     flex: 1 1 auto;
 }
 .plans-advantages__item {
+    position: relative;
+    display: flex;
+    gap: 10px;
     line-height: 22px;
+    padding-left: 25px;
+    &::before {
+        position: absolute;
+        top: 3px;
+        left: 0;
+        font-size: 18px;
+    }
 }
 .plans__price {
     text-align: center;

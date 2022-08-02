@@ -9,7 +9,7 @@
       </div>
       <div class="invite__link">
         <div class="invite__help">Click on the link</div>
-        <div class="invite__button _icon-file-copy">Discounts On Services</div>
+        <a href="#" class="invite__button _icon-file-copy">Discounts On Services</a>
       </div>
     </div>
 </template>

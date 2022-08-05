@@ -1,16 +1,18 @@
 <template lang="">
   <Transition name="popup">
-    <div v-if="popup === 'login'" class="popup login" :class="{ 'popup-open': popup === 'login' }" data-popup="login">
+    <div
+      v-if="popup === 'login'"
+      class="popup login"
+      :class="{ 'popup-open': popup === 'login' }"
+      data-popup="login"
+    >
       <div class="popup__body">
         <div class="popup__content">
           <div class="popup__header">
             <div class="popup__title">Log in</div>
-            <div class="popup__close" @click="$emit('closePopup')"></div>
+            <div class="popup__close" @click="activePopup('')"></div>
             <div class="popup__create">
-              New user?<button
-                data-popup-button="create"
-                @click="$emit('changePopup', 'registration')"
-              >
+              New user?<button @click="activePopup('registration')">
                 Create an account
               </button>
             </div>
@@ -73,16 +75,19 @@
     </div>
   </Transition>
   <Transition name="popup">
-    <div v-if="popup === 'registration'" class="popup registration" :class="{ 'popup-open': popup === 'registration' }" data-popup="create">
+    <div
+      v-if="popup === 'registration'"
+      class="popup registration"
+      :class="{ 'popup-open': popup === 'registration' }"
+    >
       <div class="popup__body">
         <div class="popup__content">
           <div class="popup__header">
             <div class="popup__title">Create an account</div>
-            <div class="popup__close" @click="$emit('closePopup')"></div>
+            <div class="popup__close" @click="activePopup('')"></div>
             <div class="popup__create">
               Already have an account?<button
-                data-popup-button="login"
-                @click="$emit('changePopup', 'login')"
+                @click="activePopup('login')"
               >
                 Sign in
               </button>
@@ -155,6 +160,7 @@
   </Transition>
 </template>
 <script>
+import {mapActions} from 'vuex'
 export default {
   emits: ["closePopup", "changePopup", "successLogin"],
   props: {
@@ -176,6 +182,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions([
+      'activePopup'
+    ]),
     async createNewUser() {
       let response = await fetch(
         `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`,
@@ -191,7 +200,7 @@ export default {
 
       let newUserInfo = await response.json();
 
-      this.$emit("closePopup");
+      this.activePopup('');
 
       this.registrationInputs.name = "";
       this.registrationInputs.email = "";
@@ -225,14 +234,14 @@ export default {
       );
 
       let userInfo = await response.json();
-      if(userInfo.error) {
-        this.authError = userInfo.error.message
-        return
+      if (userInfo.error) {
+        this.authError = userInfo.error.message;
+        return;
       }
       localStorage.setItem("accessToken", userInfo.idToken);
       localStorage.setItem("refreshToken", userInfo.refreshToken);
 
-      this.$emit("closePopup");
+      this.activePopup('');
       this.$emit("successLogin");
 
       this.loginInputs.email = "";

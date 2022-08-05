@@ -153,3 +153,30 @@
         height: 20px;
     }
 }
+.popup_no-fullscreen {
+    padding: 0px 10px;
+    .popup__body {
+        @media(max-width: 450px) {
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 32px;
+            .popup__close {
+                display: none;
+            }
+            .popup__buttons {
+                flex-direction: column;
+            }
+        }
+    }
+}
+.popup__buttons {
+    display: flex;
+    gap: 15px;
+}
+.popup__text {
+    font-size: 26px;
+    line-height: 36px;
+    color: #171717;
+    font-weight: 600;
+}

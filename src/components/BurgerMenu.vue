@@ -38,11 +38,11 @@
         </ul>
       </div>
       <div v-if="!isLogined" class="burger-menu__auth burger-auth">
-        <button @click="$emit('popupOpen', 'login')" class="burger-auth__login" data-popup-button="login">Login</button>
-        <button @click="$emit('popupOpen', 'registration')" class="burger-auth__sign-up" data-popup-button="create">Sign up</button>
+        <button @click="activePopup('login')" class="burger-auth__login" data-popup-button="login">Login</button>
+        <button @click="activePopup('registration')" class="burger-auth__sign-up" data-popup-button="create">Sign up</button>
       </div>
       <div v-if="isLogined" class="burger-menu__logout">
-        <a @click="$emit('logout')" href="#" class="burger-menu__logout-button _icon-profile-exit">Log out</a>
+        <a @click="activePopup('confirm')" href="#" class="burger-menu__logout-button _icon-profile-exit">Log out</a>
       </div>
       <div class="burger-menu__footer">
         <div class="burger-menu__socials">
@@ -72,9 +72,10 @@
   </div>
 </template>
 <script>
+import {mapGetters, mapActions} from 'vuex'
 export default {
+  emits: ['closeBurger'],
   props: {
-    isLogined: Boolean,
     profileUrl: String
   },
   data() {
@@ -82,5 +83,15 @@ export default {
       languageDropActive: false
     }
   },
+  methods: {
+    ...mapActions([
+      'activePopup'
+    ])
+  },
+  computed: {
+      ...mapGetters([
+      'isLogined',
+    ])
+  }
 };
 </script>

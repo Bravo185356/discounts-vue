@@ -1,44 +1,37 @@
 <template lang="">
-  <div class="wrapper" :class="{ '_lock': pageLock }">
-    <page-header @page-lock="pageLock = !pageLock" :userID="currentUser" :isLogined="isLogined" @logout="logout" @popup-open="popupOpen"></page-header>
+  <div class="wrapper" :class="{ _lock: pageLock }">
+    <page-header @page-lock="pageLock = !pageLock" />
     <div class="wrapper__container">
-      <router-view :currentUser="currentUser" :isLogined="isLogined"></router-view>
+      <router-view />
     </div>
-    <page-footer></page-footer>
-    <auth-popups :apiKey="API_KEY" :popup="activePopup" @success-login="successLogin" @change-popup="popupOpen" @close-popup="activePopup = ''"></auth-popups>
+    <page-footer />
+    <auth-popups :apiKey="API_KEY" :popup="activePopup" @success-login="successLogin" />
+    <logout-popup v-if="activePopup === 'confirm'" />
   </div>
 </template>
 <script>
 import AuthPopups from "./components/AuthPopups.vue";
 import PageHeader from "./components/PageHeader.vue";
-import PageFooter from './components/PageFooter.vue'
+import PageFooter from "./components/PageFooter.vue";
+import LogoutPopup from "./components/LogoutPopup.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     PageHeader,
     AuthPopups,
-    PageFooter
+    PageFooter,
+    LogoutPopup,
   },
   data() {
     return {
-      isLogined: false,
-      activePopup: "",
       API_KEY: "AIzaSyCRYrVhJoaW0yinGmIi-MR9GMOzWBpaTZg",
-      currentUser: {},
-      pageLock: false
+      pageLock: false,
     };
   },
   methods: {
-    popupOpen(popupName) {
-      this.activePopup = popupName;
-    },
-    logout() {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-
-      this.isLogined = false;
-    },
+    ...mapActions(["currentUser", "isLogined"]),
     successLogin() {
-      this.getUserInfo()
+      this.getUserInfo();
     },
     async getUserInfo() {
       let response = await fetch(
@@ -52,13 +45,13 @@ export default {
         }
       );
       let userInfo = await response.json();
-      if(userInfo.error) {
+      if (userInfo.error) {
         this.exchangeRefreshToken();
       } else {
-        this.currentUser = userInfo.users[0]
-        console.log(this.currentUser)
-        this.isLogined = true;
-      }   
+        this.currentUser(userInfo.users[0]);
+
+        this.isLogined(true);
+      }
     },
     async exchangeRefreshToken() {
       let response = await fetch(
@@ -73,18 +66,20 @@ export default {
         }
       );
       let newTokens = await response.json();
-      if(newTokens.error) {
-        console.log(localStorage.getItem("refreshToken"))
-        console.log(newTokens.error)
-        return
+      if (newTokens.error) {
+        console.log(localStorage.getItem("refreshToken"));
+        console.log(newTokens.error);
+        return;
       }
-      console.log(newTokens);
 
       localStorage.setItem("accessToken", newTokens.id_token);
       localStorage.setItem("refreshToken", newTokens.refresh_token);
 
       this.getUserInfo();
     },
+  },
+  computed: {
+    ...mapGetters(["activePopup"]),
   },
   async mounted() {
     if (localStorage.getItem("accessToken")) {
@@ -93,5 +88,4 @@ export default {
   },
 };
 </script>
-<style lang="">
-</style>
+<style lang=""></style>

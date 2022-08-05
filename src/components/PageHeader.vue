@@ -77,8 +77,7 @@
         <button
           v-if="!isLogined"
           class="header__login-button"
-          @click="$emit('popupOpen', 'login')"
-          data-popup-button="login"
+          @click="activePopup('login')"
         >
           Log in
         </button>
@@ -109,9 +108,6 @@
   <transition name="burger">
     <burger-menu
       @close-burger="changeBurgerState"
-      @popup-open="$emit('popupOpen', 'login')"
-      @logout="$emit('logout')"
-      :isLogined="isLogined"
       :profileUrl="profileURL"
       v-if="burgerMenuOpen"
     ></burger-menu>
@@ -119,14 +115,11 @@
 </template>
 <script>
 import BurgerMenu from "./BurgerMenu.vue";
+import {mapGetters, mapActions} from 'vuex';
 export default {
-  emits: ['popupOpen', 'logout', 'pageLock'],
+  emits: ['pageLock'],
   components: {
     BurgerMenu,
-  },
-  props: {
-    isLogined: Boolean,
-    userID: Object,
   },
   data() {
     return {
@@ -137,13 +130,13 @@ export default {
     };
   },
   methods: {
+    ...mapActions([
+      'activePopup'
+    ]),
     logout() {
-      this.$emit("logout");
+      this.activePopup('confirm')
 
       this.profileMenuOpen = false;
-
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
     },
     closeAllDrops() {
       this.subscriptionDrop = false;
@@ -153,15 +146,20 @@ export default {
       this.$emit("pageLock");
       this.burgerMenuOpen = !this.burgerMenuOpen;
     },
+    
   },
   computed: {
     profileURL() {
-      return `/profile/${this.userID.localId}`;
+      return `/profile/${this.currentUser.localId}`;
     },
-  },
-  updated() {
-    console.log(this.userID);
-  },
+    isLogined() {
+      return this.$store.getters.isLogined
+    },
+    ...mapGetters([
+      'isLogined',
+      'currentUser'
+    ])
+  }
 };
 </script>
 <style lang="scss">

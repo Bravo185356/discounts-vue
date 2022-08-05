@@ -107,11 +107,8 @@
 </template>
 <script>
 import InviteFriends from "../components/InviteFriends.vue";
+import {mapGetters} from 'vuex'
 export default {
-  props: {
-    isLogined: Boolean,
-    currentUser: Object,
-  },
   components: {
     InviteFriends,
   },
@@ -144,6 +141,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters([
+      'isLogined',
+      'currentUser'
+    ]),
     isMobile() {
       return this.screenWidth <= 450 ? true : false;
     },

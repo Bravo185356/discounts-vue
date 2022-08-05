@@ -28,9 +28,6 @@
 import InviteFriends from '../components/InviteFriends.vue'
 import FaqBlock from '../components/FaqBlock.vue'
 export default {
-    props: {
-        isLogined: Boolean
-    },
     components: {
         InviteFriends,
         FaqBlock

@@ -148,13 +148,6 @@
 }
 @media (max-width: 450px) {
     .popup {
-        .popup__body {
-            transition: left 0.3s ease;
-            left: -100%;
-            top: 0;
-            border-radius: 0px;
-            transform: translateY(60px);
-        }
         &.popup-open {
             backdrop-filter: none;
             .popup__body {
@@ -162,6 +155,13 @@
                 top: auto;
             }
         }
+    }
+    .popup__body {
+        transition: left 0.3s ease;
+        left: -100%;
+        top: 0;
+        border-radius: 0px;
+        transform: translateY(60px);
     }
     .popup-form__buttons {
         flex-direction: column-reverse;

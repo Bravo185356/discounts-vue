@@ -4,7 +4,8 @@ export default createStore({
   state: {
     isLogined: false,
     currentUser: {},
-    activePopup: ''
+    activePopup: '',
+    apiKey: ''
   },
   getters: {
     isLogined(state) {
@@ -15,6 +16,9 @@ export default createStore({
     },
     activePopup(state) {
       return state.activePopup
+    },
+    getApiKey(state) {
+      return state.apiKey
     }
   },
   mutations: {
@@ -26,16 +30,22 @@ export default createStore({
     },
     changeActivePopup(state, popupName) {
       state.activePopup = popupName
+    },
+    setApiKey(state, API_KEY) {
+      state.apiKey = API_KEY
     }
   },
   actions: {
     isLogined({commit}, loginState) {
       commit('changeLoginState', loginState)
     },
+    setApiKey({commit}, API_KEY) {
+      commit('setApiKey', API_KEY)
+    },
     currentUser({commit}, currentUser) {
       commit('setCurrentUser', currentUser)
     },
-    activePopup({commit}, popupName) {
+    changeActivePopup({commit}, popupName) {
       commit('changeActivePopup', popupName)
     }
   },

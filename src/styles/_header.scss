@@ -1,8 +1,10 @@
 .header {
+    position: relative;
     min-height: 60px;
     font-size: 16px;
     font-family: 'Montserrat', sans-serif;
     background-color: white;
+    z-index: 201;
     * {
         color: #333333;
     }

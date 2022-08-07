@@ -4,10 +4,10 @@
       <div class="popup__content">
         <div class="popup__header">
           <div class="popup__text">Are you sure want to logout?</div>
-          <div class="popup__close" @click="activePopup('')"></div>
+          <div class="popup__close" @click="changeActivePopup('')"></div>
         </div>
         <div class="popup__buttons">
-          <button @click="activePopup('')" class="logout-cancel white-button">
+          <button @click="changeActivePopup('')" class="logout-cancel white-button">
             Cancel
           </button>
           <button @click="logout" class="logout-confirm white-button">
@@ -27,10 +27,10 @@ export default {
       localStorage.removeItem("refreshToken");
 
       this.isLogined(false)
-      this.activePopup('')
+      this.changeActivePopup('')
     },
     ...mapActions([
-      'activePopup',
+      'changeActivePopup',
       'isLogined'
     ])
   },

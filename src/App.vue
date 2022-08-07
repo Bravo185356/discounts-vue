@@ -1,11 +1,11 @@
 <template lang="">
   <div class="wrapper" :class="{ _lock: pageLock }">
-    <page-header @page-lock="pageLock = !pageLock" />
+    <page-header />
     <div class="wrapper__container">
       <router-view />
     </div>
     <page-footer />
-    <auth-popups :apiKey="API_KEY" :popup="activePopup" @success-login="successLogin" />
+    <auth-popups @success-login="successLogin" />
     <logout-popup v-if="activePopup === 'confirm'" />
   </div>
 </template>
@@ -25,7 +25,6 @@ export default {
   data() {
     return {
       API_KEY: "AIzaSyCRYrVhJoaW0yinGmIi-MR9GMOzWBpaTZg",
-      pageLock: false,
     };
   },
   methods: {
@@ -35,7 +34,7 @@ export default {
     },
     async getUserInfo() {
       let response = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${this.API_KEY}`,
+        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${this.getApiKey}`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -55,7 +54,7 @@ export default {
     },
     async exchangeRefreshToken() {
       let response = await fetch(
-        `https://securetoken.googleapis.com/v1/token?key=${this.API_KEY}`,
+        `https://securetoken.googleapis.com/v1/token?key=${this.getApiKey}`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -79,13 +78,20 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["activePopup"]),
+    ...mapGetters(["activePopup", 'getApiKey']),
+    pageLock() {
+      return this.activePopup === '' ? false : true 
+    }
   },
   async mounted() {
+    this.$store.dispatch('setApiKey', this.API_KEY)
     if (localStorage.getItem("accessToken")) {
       this.getUserInfo();
     }
+    
   },
 };
 </script>
-<style lang=""></style>
+<style lang="">
+  
+</style>

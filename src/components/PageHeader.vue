@@ -77,7 +77,7 @@
         <button
           v-if="!isLogined"
           class="header__login-button"
-          @click="activePopup('login')"
+          @click="changeActivePopup('login')"
         >
           Log in
         </button>
@@ -117,7 +117,6 @@
 import BurgerMenu from "./BurgerMenu.vue";
 import {mapGetters, mapActions} from 'vuex';
 export default {
-  emits: ['pageLock'],
   components: {
     BurgerMenu,
   },
@@ -131,10 +130,10 @@ export default {
   },
   methods: {
     ...mapActions([
-      'activePopup'
+      'changeActivePopup'
     ]),
     logout() {
-      this.activePopup('confirm')
+      this.changeActivePopup('confirm')
 
       this.profileMenuOpen = false;
     },
@@ -143,10 +142,8 @@ export default {
       this.languageDrop = false;
     },
     changeBurgerState() {
-      this.$emit("pageLock");
       this.burgerMenuOpen = !this.burgerMenuOpen;
     },
-    
   },
   computed: {
     profileURL() {

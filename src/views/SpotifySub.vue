@@ -47,14 +47,18 @@
   </div>
   <invite-friends></invite-friends>
   <faq-block></faq-block>
+  <subscription-paid />
 </template>
 <script>
+import SubscriptionPaid from '../components/SubscriptionPaid.vue'
 import InviteFriends from "../components/InviteFriends.vue";
 import FaqBlock from "../components/FaqBlock.vue";
+import {mapActions} from 'vuex'
 export default {
   components: {
     InviteFriends,
     FaqBlock,
+    SubscriptionPaid
   },
   data() {
     return {
@@ -89,6 +93,18 @@ export default {
       ],
     };
   },
+  methods: {
+        checkAuth(subInfo) {
+            console.log(subInfo)
+            if(this.isLogined === false) {
+                alert('Залогиньтесь, чтобы сделать покупку')
+                return
+            }
+            this.changeActivePopup('paid')
+        },
+        ...mapActions(['changeActivePopup'])
+    },
 };
 </script>
-<style lang=""></style>
+<style lang="">
+</style>

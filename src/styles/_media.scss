@@ -70,9 +70,6 @@
     .popup__content {
         row-gap: 30px;
     }
-    .popup__body {
-        max-height: 90vh;
-    }
     .profile__header {
         flex-direction: column;
         row-gap: 10px;
@@ -147,12 +144,15 @@
     }
 }
 @media (max-width: 450px) {
-    .popup {
+    .popup:not(.popup_no-fullscreen) {
+        z-index: 200;
         &.popup-open {
             backdrop-filter: none;
             .popup__body {
                 left: 0;
                 top: auto;
+                height: 100%;
+                padding-top: 60px;
             }
         }
     }
@@ -161,7 +161,9 @@
         left: -100%;
         top: 0;
         border-radius: 0px;
-        transform: translateY(60px);
+        
+        // transform: translateY(60px);
+        transform: none;
     }
     .popup-form__buttons {
         flex-direction: column-reverse;

@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div class="wrapper" :class="{ _lock: pageLock }">
     <page-header />
     <div class="wrapper__container">
@@ -47,8 +47,7 @@ export default {
       if (userInfo.error) {
         this.exchangeRefreshToken();
       } else {
-        this.currentUser(userInfo.users[0]);
-
+        this.currentUser(userInfo.users[0])
         this.isLogined(true);
       }
     },
@@ -78,20 +77,17 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["activePopup", 'getApiKey']),
+    ...mapGetters(["activePopup", "getApiKey"]),
     pageLock() {
-      return this.activePopup === '' ? false : true 
-    }
+      return this.activePopup === "" ? false : true;
+    },
   },
   async mounted() {
-    this.$store.dispatch('setApiKey', this.API_KEY)
+    this.$store.dispatch("setApiKey", this.API_KEY);
     if (localStorage.getItem("accessToken")) {
       this.getUserInfo();
     }
-    
   },
 };
 </script>
-<style lang="">
-  
-</style>
+<style lang=""></style>

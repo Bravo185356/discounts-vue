@@ -71,11 +71,10 @@
     font-family: 'Montserrat', sans-serif;
     position: relative;
     background: #ECF3FB;
+    height: 100%;
     &._lock {
-        height: 100vh;
-        overflow: hidden;
     }
-    
+    // убирание скролла таким образом поднимает страницу в самый вверх
 }
 [class*="__container"] {
     max-width: 1220px;
@@ -138,7 +137,6 @@
     border-radius: 16px;
     padding: 24px;
     &.spoller-active {
-        visibility: visible;
         opacity: 1;
     }
 }
@@ -166,5 +164,9 @@
     line-height: 22px;
     color: #8F8F8F;
     padding-left: 20px;
+}
+.popup__error {
+    color: rgb(226, 35, 35);
+    margin: 10px 0px
 }
 @import '_media.scss';

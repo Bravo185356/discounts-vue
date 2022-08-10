@@ -56,7 +56,7 @@
 import SubscriptionPaid from "../components/SubscriptionPaid.vue";
 import InviteFriends from "../components/InviteFriends.vue";
 import FaqBlock from "../components/FaqBlock.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: {
     InviteFriends,
@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     checkAuth(subInfo) {
-      console.log(subInfo);
+      console.log(this.isLogined)
       if (this.isLogined === false) {
         alert("Залогиньтесь, чтобы сделать покупку");
         return;
@@ -108,6 +108,9 @@ export default {
     },
     ...mapActions(["changeActivePopup"]),
   },
+  computed: {
+    ...mapGetters(['isLogined'])
+  }
 };
 </script>
 <style lang="scss">

@@ -1,5 +1,4 @@
 <template lang="html">
-  <div class="wrapper">
     <main class="main">
       <section class="start">
         <div class="start__container">
@@ -136,7 +135,6 @@
         </div>
       </section>
     </main>
-  </div>
 </template>
 <script>
 import InviteFriends from '../components/InviteFriends.vue';

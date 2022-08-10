@@ -1,7 +1,7 @@
 <template lang="">
   <div class="popup popup_no-fullscreen">
     <div class=" popup__body ">
-      <div class="popup__content">
+      <div class="popup__content" v-scroll-lock="true">
         <div class="popup__header">
           <div class="popup__text">Are you sure want to logout?</div>
           <div class="popup__close" @click="changeActivePopup('')"></div>

@@ -14,37 +14,39 @@
               class="menu__link _icon-arrow"
               >Subscriptions</a
             >
-            <div v-if="subscriptionDrop" class="subscriptions__drop drop-menu">
-              <ul class="subscriptions__list">
-                <li class="subscriptions__item">
-                  <router-link
-                    @click="closeAllDrops"
-                    to="/netflix"
-                    class="subscriptions__link"
-                    href="#"
-                    >Netflix</router-link
-                  >
-                </li>
-                <li class="subscriptions__item">
-                  <router-link
-                    @click="closeAllDrops"
-                    to="/youtube"
-                    class="subscriptions__link"
-                    href="#"
-                    >YouTube Premium</router-link
-                  >
-                </li>
-                <li class="subscriptions__item">
-                  <router-link
-                    @click="closeAllDrops"
-                    to="/spotify"
-                    class="subscriptions__link"
-                    href="#"
-                    >Spotify</router-link
-                  >
-                </li>
-              </ul>
-            </div>
+            <transition name="drop-menu">
+              <div v-if="subscriptionDrop" class="subscriptions__drop drop-menu">
+                <ul class="subscriptions__list">
+                  <li class="subscriptions__item">
+                    <router-link
+                      @click="closeAllDrops"
+                      to="/netflix"
+                      class="subscriptions__link"
+                      href="#"
+                      >Netflix</router-link
+                    >
+                  </li>
+                  <li class="subscriptions__item">
+                    <router-link
+                      @click="closeAllDrops"
+                      to="/youtube"
+                      class="subscriptions__link"
+                      href="#"
+                      >YouTube Premium</router-link
+                    >
+                  </li>
+                  <li class="subscriptions__item">
+                    <router-link
+                      @click="closeAllDrops"
+                      to="/spotify"
+                      class="subscriptions__link"
+                      href="#"
+                      >Spotify</router-link
+                    >
+                  </li>
+                </ul>
+              </div>
+            </transition>
           </li>
           <li class="menu__item"><a href="#" class="menu__link">FAQ</a></li>
           <li class="menu__item"><a href="#" class="menu__link">Support</a></li>
@@ -59,19 +61,21 @@
         <div @click="languageDrop = !languageDrop" class="language__current _icon-arrow">
           en
         </div>
-        <div v-if="languageDrop" class="language__drop drop-menu">
-          <ul class="language__list">
-            <li class="language__item">
-              <a class="language__link" href="#">English</a>
-            </li>
-            <li class="language__item">
-              <a class="language__link" href="#">Ukraine</a>
-            </li>
-            <li class="language__item">
-              <a class="language__link" href="#">Russian</a>
-            </li>
-          </ul>
-        </div>
+        <transition name="drop-menu">
+          <div v-if="languageDrop" class="language__drop drop-menu">
+            <ul class="language__list">
+              <li class="language__item">
+                <a class="language__link" href="#">English</a>
+              </li>
+              <li class="language__item">
+                <a class="language__link" href="#">Ukraine</a>
+              </li>
+              <li class="language__item">
+                <a class="language__link" href="#">Russian</a>
+              </li>
+            </ul>
+          </div>
+        </transition>
       </div>
       <div class="header__login">
         <button
@@ -115,7 +119,7 @@
 </template>
 <script>
 import BurgerMenu from "./BurgerMenu.vue";
-import {mapGetters, mapActions} from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     BurgerMenu,
@@ -129,11 +133,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      'changeActivePopup'
-    ]),
+    ...mapActions(["changeActivePopup"]),
     logout() {
-      this.changeActivePopup('confirm')
+      this.changeActivePopup("confirm");
 
       this.profileMenuOpen = false;
     },
@@ -150,13 +152,10 @@ export default {
       return `/profile/${this.currentUser.localId}`;
     },
     isLogined() {
-      return this.$store.getters.isLogined
+      return this.$store.getters.isLogined;
     },
-    ...mapGetters([
-      'isLogined',
-      'currentUser'
-    ])
-  }
+    ...mapGetters(["isLogined", "currentUser"]),
+  },
 };
 </script>
 <style lang="scss">
@@ -173,5 +172,13 @@ export default {
 }
 .burger-leave-from {
   transform: translateX(0%);
+}
+.drop-menu-enter-active,
+.drop-menu-leave-to {
+  transition: opacity 0.3s ease;
+}
+.drop-menu-enter-from,
+.drop-menu-leave-to {
+  opacity: 0;
 }
 </style>

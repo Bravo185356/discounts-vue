@@ -53,7 +53,7 @@
   <transition name="popup">
     <div
       v-if="activePopup === 'purchase'"
-      :class="{ 'popup-open': activePopup === 'paid' }"
+      :class="{ 'popup-open': activePopup === 'purchase' }"
       class="popup popup_purchase"
     >
       <div class="popup__body">
@@ -74,29 +74,25 @@
               </div>
               <input
                 id="card-number"
-                type="number"
                 placeholder="1234 1234 1234 1234"
+                v-mask="'#### #### #### ####'"
                 class="popup-form__input input"
                 v-model="cardNumber"
+                max="16"
               />
             </div>
             <div class="popup-form__input-block">
               <label for="" class="popup-form__label">Expiration Date</label>
-              <input
-                v-model="expirationDate"
-                type="number"
-                placeholder="ММ/ГГ"
-                class="popup-form__input input"
-              />
+              <input class="popup-form__input input" placeholder="MM/YY" v-mask="'##/##'" />
             </div>
             <div class="popup-form__input-block">
               <label for="" class="popup-form__label">CVC</label>
-
               <input
                 v-model="cvc"
                 type="text"
                 placeholder="CVC"
                 class="popup-form__input input"
+                v-mask="'###'"
               />
               <div v-for="error of v$.cvc.$errors" class="popup__error">
                 {{ error.$message }}
@@ -136,13 +132,20 @@
 import { mapActions, mapGetters } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, maxLength, helpers } from "@vuelidate/validators";
+import {TheMask} from 'vue-the-mask'
 export default {
+  components: {
+    TheMask
+  },
   data() {
     return {
       v$: useVuelidate(),
       cardNumber: "",
       cvc: "",
-      expirationDate: "",
+      expirationDate: {
+        expirationMonth: 'ММ',
+        expirationYear: 'YY'
+      },
       cryptoListVisible: false,
       selectedCrypto: 'Bitcoin',
       cryptoList: ['Bitcoin', 'Crypto2', 'Crypto3', 'Crypto4']
@@ -161,6 +164,22 @@ export default {
         this.selectedCrypto = cryptoName
         this.cryptoListVisible = false
       }
+    },
+    setExpirationDate(e) {
+      if(e.target.value.length <= 2) {
+        this.expirationDate.expirationMonth = e.target.value.slice(0, 2)
+      } else if(e.target.value.length > 2) {
+        this.expirationDate.expirationMonth = e.target.value.slice(2, 4)
+      }
+      if(e.target.value.length > 4) {
+        e.target.value = e.target.value.slice(0, 5)
+        console.log(e.target.value.slice(0, 5))
+        console.log(`value в data ${this.expirationDate}`)
+        return
+      } else {
+        this.expirationDate = e.target.value
+        console.log(this.expirationDate)
+      }
     }
   },
   validations() {
@@ -175,6 +194,9 @@ export default {
   },
   computed: {
     ...mapGetters(["activePopup"]),
+    formatedExpirationDate() {
+      return `${this.expirationDate.expirationMonth}/${this.expirationDate.expirationYear}`
+    }
   },
 };
 </script>

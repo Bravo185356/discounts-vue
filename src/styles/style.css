@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,600;1,400&family=Inter:wght@400;500;600;700&family=Manrope:wght@600&family=Montserrat:wght@400;500;600&display=swap");
 .header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   min-height: 60px;
   font-size: 16px;
   font-family: 'Montserrat', sans-serif;
   background-color: white;
-  z-index: 201;
+  z-index: 100;
 }
 
 .header * {
@@ -237,7 +240,7 @@
   top: 60px;
   width: 100%;
   height: 100vh;
-  z-index: 100;
+  z-index: 110;
   overflow: scroll;
 }
 
@@ -373,7 +376,7 @@
 }
 
 .start {
-  padding-top: 60px;
+  padding-top: 100px;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -822,7 +825,7 @@
   height: 100vh;
   top: 0;
   left: 0;
-  z-index: 202;
+  z-index: 90;
   backdrop-filter: blur(4px);
 }
 
@@ -843,8 +846,8 @@
 .popup__content {
   padding: 40px;
   display: grid;
+  grid-template-rows: auto 1fr;
   row-gap: 40px;
-  height: 100%;
 }
 
 .popup__header {
@@ -852,7 +855,20 @@
   justify-content: space-between;
   flex-wrap: wrap;
   align-items: center;
-  row-gap: 12px;
+  column-gap: 10px;
+}
+
+@media (max-width: 410px) {
+  .popup__header {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: start;
+  }
+  .popup__header .popup__close {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    justify-self: end;
+  }
 }
 
 .popup__close {
@@ -918,6 +934,7 @@
   display: flex;
   justify-content: space-between;
   margin-top: 16px;
+  gap: 10px;
 }
 
 .popup-form__forgot {
@@ -964,7 +981,7 @@
   line-height: 21px;
 }
 
-.registration .popup__title {
+.registration .popup-title {
   font-size: 26px;
 }
 
@@ -1052,8 +1069,14 @@
   flex: 1 1 auto;
 }
 
-.popup_paid .popup__title {
+.popup_paid .popup-title {
   font-size: 26px;
+}
+
+@media (max-width: 410px) {
+  .popup_paid .popup-title {
+    font-size: 22px;
+  }
 }
 
 .popup_paid .popup-form__submit {
@@ -1075,8 +1098,14 @@
   width: 100%;
 }
 
-.popup_purchase .popup__title {
+.popup_purchase .popup-title {
   font-size: 26px;
+}
+
+@media (max-width: 410px) {
+  .popup_purchase .popup-title {
+    font-size: 22px;
+  }
 }
 
 .popup__apps {
@@ -1134,7 +1163,6 @@
 .popup-crypto__list {
   display: grid;
   gap: 10px;
-  position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
@@ -1153,8 +1181,26 @@
   border-radius: 8px;
 }
 
+.expiration {
+  display: flex;
+  align-items: center;
+}
+
+.expiration span {
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+  font-size: 20px;
+  background-color: #F1F4F8;
+}
+
+.expiration input {
+  border-radius: 0px;
+}
+
 .profile {
   font-family: 'Montserrat', sans-serif;
+  padding-top: 100px;
 }
 
 .profile__header {
@@ -1306,7 +1352,7 @@
 }
 
 .subscribe-plans {
-  padding-top: 80px;
+  padding-top: 100px;
 }
 
 .subscribe-plans__title.title {
@@ -1789,9 +1835,6 @@
 }
 
 @media (max-width: 450px) {
-  .popup:not(.popup_no-fullscreen) {
-    z-index: 200;
-  }
   .popup:not(.popup_no-fullscreen).popup-open {
     backdrop-filter: none;
   }
@@ -1802,11 +1845,13 @@
     padding-top: 60px;
   }
   .popup__body {
-    transition: left 0.3s ease;
-    left: -100%;
     top: 0;
     border-radius: 0px;
     transform: none;
+    margin: 0px;
+  }
+  .popup__content {
+    padding: 20px;
   }
   .popup-form__buttons {
     flex-direction: column-reverse;

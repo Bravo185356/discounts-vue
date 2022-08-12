@@ -148,12 +148,12 @@ export default {
   methods: {
     ...mapActions(["changeActivePopup"]),
     async createNewUser() {
-      const result = await this.v$.$validate();
+      const resultValidation = await this.v$.$validate();
       if (this.checkboxState === false) {
         this.showCheckboxErrorMessage = true;
         return;
       }
-      if (result) {
+      if (resultValidation) {
         let response = await fetch(
           `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.getApiKey}`,
           {

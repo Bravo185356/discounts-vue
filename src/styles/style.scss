@@ -72,9 +72,6 @@
     position: relative;
     background: #ECF3FB;
     height: 100%;
-    &._lock {
-    }
-    // убирание скролла таким образом поднимает страницу в самый вверх
 }
 [class*="__container"] {
     max-width: 1220px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" :class="{ _lock: pageLock }">
+  <div class="wrapper">
     <page-header />
     <div class="wrapper__container">
       <router-view />
@@ -77,10 +77,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["activePopup", "getApiKey"]),
-    pageLock() {
-      return this.activePopup === "" ? false : true;
-    },
+    ...mapGetters(["activePopup", "getApiKey"])
   },
   async mounted() {
     this.$store.dispatch("setApiKey", this.API_KEY);

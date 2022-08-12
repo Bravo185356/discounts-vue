@@ -145,7 +145,6 @@
 }
 @media (max-width: 450px) {
     .popup:not(.popup_no-fullscreen) {
-        z-index: 200;
         &.popup-open {
             backdrop-filter: none;
             .popup__body {
@@ -157,13 +156,13 @@
         }
     }
     .popup__body {
-        transition: left 0.3s ease;
-        left: -100%;
         top: 0;
         border-radius: 0px;
-        
-        // transform: translateY(60px);
         transform: none;
+        margin: 0px;
+    }
+    .popup__content {
+        padding: 20px;
     }
     .popup-form__buttons {
         flex-direction: column-reverse;

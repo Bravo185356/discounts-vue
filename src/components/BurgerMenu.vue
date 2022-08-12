@@ -38,11 +38,11 @@
         </ul>
       </div>
       <div v-if="!isLogined" class="burger-menu__auth burger-auth">
-        <button @click="changeActivePopup('login')" class="burger-auth__login" data-popup-button="login">Login</button>
-        <button @click="changeActivePopup('registration')" class="burger-auth__sign-up" data-popup-button="create">Sign up</button>
+        <button @click="openPopup('login')" class="burger-auth__login">Login</button>
+        <button @click="openPopup('registration')" class="burger-auth__sign-up">Sign up</button>
       </div>
       <div v-if="isLogined" class="burger-menu__logout">
-        <a @click="changeActivePopup('confirm')" href="#" class="burger-menu__logout-button _icon-profile-exit">Log out</a>
+        <a @click="openPopup('confirm')" href="#" class="burger-menu__logout-button _icon-profile-exit">Log out</a>
       </div>
       <div class="burger-menu__footer">
         <div class="burger-menu__socials">
@@ -86,7 +86,11 @@ export default {
   methods: {
     ...mapActions([
       'changeActivePopup'
-    ])
+    ]),
+    openPopup(popupName) {
+      this.$emit('closeBurger')
+      this.changeActivePopup(popupName)
+    }
   },
   computed: {
       ...mapGetters([

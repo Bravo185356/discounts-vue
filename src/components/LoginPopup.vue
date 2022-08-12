@@ -122,8 +122,8 @@ export default {
   },
   methods: {
     async signInEmailPassword() {
-      const result = await this.v$.$validate();
-      if (result) {
+      const resultValidation = await this.v$.$validate();
+      if (resultValidation) {
         let response = await fetch(
           `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.getApiKey}`,
           {
@@ -156,7 +156,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .popup-enter-active,
 .popup-leave-active {
   transition: opacity 0.2s ease;
@@ -164,5 +164,8 @@ export default {
 .popup-enter-from,
 .popup-leave-to {
   opacity: 0;
+}
+.popup__content {
+  grid-template-rows: repeat(auto-fill, auto);
 }
 </style>

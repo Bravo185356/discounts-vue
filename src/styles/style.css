@@ -101,6 +101,12 @@
 ._icon-whatsapp,
 ._icon-telegram {
   font-size: 24px;
+  cursor: pointer;
+}
+
+._icon-whatsapp:hover,
+._icon-telegram:hover {
+  color: #1749B3;
 }
 
 .language {
@@ -659,7 +665,7 @@
 }
 
 .faq {
-  margin-top: 120px;
+  margin-top: calc(40px + 80 * ((100vw - 320px) / 1600));
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -738,7 +744,7 @@
 .footer__columns {
   display: flex;
   justify-content: space-between;
-  column-gap: calc(15px + 13 * ((100vw - 320px) / 1600));
+  column-gap: calc(28px + 27 * ((100vw - 320px) / 1600));
   row-gap: 15px;
 }
 
@@ -760,6 +766,10 @@
 
 .footer-about__description {
   line-height: 24px;
+}
+
+.footer-about__description span {
+  display: block;
 }
 
 .footer-column__title {
@@ -825,7 +835,7 @@
   height: 100vh;
   top: 0;
   left: 0;
-  z-index: 90;
+  z-index: 120;
   backdrop-filter: blur(4px);
 }
 
@@ -1589,6 +1599,9 @@
   position: relative;
   background: #ECF3FB;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
 }
 
 [class*="__container"] {
@@ -1686,13 +1699,29 @@
   border-radius: 12px;
   font-size: 17px;
   line-height: 22px;
-  color: #8F8F8F;
+  color: #070033;
   padding-left: 20px;
+}
+
+.input:hover {
+  border: 1px solid #838099;
+}
+
+.input:focus {
+  border: 1px solid #CECBDF;
+}
+
+.input::placeholder {
+  color: #8F8F8F;
 }
 
 .popup__error {
   color: #e22323;
   margin: 10px 0px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1749B3;
 }
 
 @media (max-width: 1080px) {
@@ -1815,10 +1844,8 @@
   }
   .footer-column:last-child {
     justify-content: space-between;
-  }
-  .footer-column:last-child .language__drop {
-    right: auto;
-    left: 0;
+    flex-direction: row;
+    flex: 0 1 100%;
   }
   .footer-about {
     margin-bottom: 40px;
@@ -1836,6 +1863,7 @@
 
 @media (max-width: 450px) {
   .popup:not(.popup_no-fullscreen).popup-open {
+    z-index: 90;
     backdrop-filter: none;
   }
   .popup:not(.popup_no-fullscreen).popup-open .popup__body {

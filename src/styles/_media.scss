@@ -125,10 +125,8 @@
     }
     .footer-column:last-child {
         justify-content: space-between;
-        .language__drop {
-            right: auto;
-            left: 0;
-        }
+        flex-direction: row;
+        flex: 0 1 100%;
     }
     .footer-about {
         margin-bottom: 40px;
@@ -146,6 +144,7 @@
 @media (max-width: 450px) {
     .popup:not(.popup_no-fullscreen) {
         &.popup-open {
+            z-index: 90;
             backdrop-filter: none;
             .popup__body {
                 left: 0;
@@ -204,4 +203,5 @@
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
     }
+    
 }

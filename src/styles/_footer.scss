@@ -9,7 +9,7 @@
 .footer__columns {
     display: flex;
     justify-content: space-between;
-    @include adaptiveValue('column-gap', 28, 15, 0);
+    @include adaptiveValue('column-gap', 55, 28, 0);
     row-gap: 15px;
 }
 .footer__column {
@@ -27,6 +27,9 @@
 }
 .footer-about__description {
     line-height: 24px;
+    span {
+        display: block;
+    }
 }
 .footer-column__title {
     font-size: 18px;
@@ -49,7 +52,6 @@
         font-size: 24px;
     }
 }
-
 .footer-column__language {
     position: relative;
     .footer-language__drop {

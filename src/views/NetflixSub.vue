@@ -50,7 +50,7 @@
   </div>
   <invite-friends></invite-friends>
   <faq-block></faq-block>
-  <subscription-paid></subscription-paid>
+  <subscription-paid :selectedPlan="selectedPlan"></subscription-paid>
 </template>
 <script>
 import SubscriptionPaid from "../components/SubscriptionPaid.vue";
@@ -95,22 +95,45 @@ export default {
           price: 75,
         },
       ],
+      selectedPlan: {
+        name: '',
+        price: ''
+      }
     };
   },
   methods: {
     checkAuth(subInfo) {
-      console.log(this.isLogined)
+      console.log(subInfo)
       if (this.isLogined === false) {
         alert("Залогиньтесь, чтобы сделать покупку");
         return;
       }
+      this.createSelectedPlanInfo(subInfo)
       this.changeActivePopup("paid");
+    },
+    createSelectedPlanInfo(subInfo) {
+      this.selectedPlan.name = subInfo.name
+      if(this.subscribeDuration === '6') {
+        this.selectedPlan.price = subInfo.price 
+      } else {
+        this.selectedPlan.price = subInfo.price * 1.85
+      }
+      console.log(this.selectedPlan)
     },
     ...mapActions(["changeActivePopup"]),
   },
   computed: {
-    ...mapGetters(['isLogined'])
-  }
+    ...mapGetters(['isLogined']),
+    planPrice() {
+      if(this.subscribeDuration === 6) {
+        return 
+      }
+      return 
+    }
+  },
+  updated() {
+    console.log(this.selectedPlan)
+  },
 };
 </script>
 <style lang="scss">

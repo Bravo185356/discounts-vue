@@ -48,7 +48,7 @@
               </div>
             </transition>
           </li>
-          <li class="menu__item"><a href="#" class="menu__link">FAQ</a></li>
+          <li class="menu__item"><router-link to="/faq" class="menu__link">FAQ</router-link></li>
           <li class="menu__item"><a href="#" class="menu__link">Support</a></li>
           <li class="menu__item"><a href="#" class="menu__link">About</a></li>
         </ul>

@@ -6,6 +6,6 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import BodyScrollLock from '@/plugins/BodyScrollLock'
-import VueTheMask from 'vue-the-mask'
+import Maska from 'maska'
 
-createApp(App).use(store).use(router).use(BodyScrollLock).use(VueTheMask).mount('#app')
+createApp(App).use(store).use(router).use(BodyScrollLock).use(Maska).mount('#app')

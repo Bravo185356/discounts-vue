@@ -1,5 +1,5 @@
 .faq {
-    margin-top: 120px;
+    @include adaptiveValue('margin-top', 120, 40, 0);
     font-family: 'Montserrat', sans-serif;
 }
 .faq__title {

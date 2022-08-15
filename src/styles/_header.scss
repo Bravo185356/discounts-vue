@@ -68,6 +68,10 @@
 ._icon-whatsapp,
 ._icon-telegram {
     font-size: 24px;
+    cursor: pointer;
+    &:hover {
+        color: #1749B3;
+    }
 }
 .language {
     position: relative;

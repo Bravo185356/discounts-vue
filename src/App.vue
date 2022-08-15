@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" :class="{ 'page-shift' : activePopup !== '' }">
     <page-header />
     <div class="wrapper__container">
       <router-view />

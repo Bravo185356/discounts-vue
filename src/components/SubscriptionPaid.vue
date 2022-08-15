@@ -1,55 +1,5 @@
 <template lang="">
-  <transition name="popup">
-    <div
-      v-if="activePopup === 'paid'"
-      :class="{ 'popup-open': activePopup === 'paid' }"
-      class="popup popup_paid"
-    >
-      <div class="popup__body">
-        <div class="popup__content" v-scroll-lock="true">
-          <div class="popup__header">
-            <div class="popup-title">Subscription Application</div>
-            <div class="popup__close" @click="changeActivePopup('')"></div>
-          </div>
-          <form class="popup-form">
-            <div class="popup-form__input-block">
-              <label for="input-name" class="popup-form__label">Enter your name</label>
-              <input
-                id="input-name"
-                placeholder="Anastasia"
-                type="text"
-                class="popup-form__input input"
-              />
-            </div>
-            <div class="popup-form__input-block">
-              <label for="input-email" class="popup-form__label">E-mail</label>
-              <input
-                id="input-email"
-                placeholder="Enter your e-mail"
-                type="email"
-                class="popup-form__input input"
-              />
-            </div>
-            <div class="popup-form__input-block">
-              <label for="input-phone" class="popup-form__label">Phone</label>
-              <input
-                id="input-phone"
-                placeholder="Enter your phone"
-                type="text"
-                class="popup-form__input input"
-              />
-            </div>
-            <button
-              @click.prevent="changeActivePopup('purchase')"
-              class="popup-form__submit blue-button"
-            >
-              Apply
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </transition>
+  <contacts-popup />
   <transition name="popup">
     <div
       v-if="activePopup === 'purchase'"
@@ -75,7 +25,7 @@
               <input
                 id="card-number"
                 placeholder="1234 1234 1234 1234"
-                v-mask="'#### #### #### ####'"
+                v-maska="'#### #### #### ####'"
                 class="popup-form__input input"
                 v-model="cardNumber"
                 max="16"
@@ -83,7 +33,11 @@
             </div>
             <div class="popup-form__input-block">
               <label for="" class="popup-form__label">Expiration Date</label>
-              <input class="popup-form__input input" placeholder="MM/YY" v-mask="'##/##'" />
+              <input
+                class="popup-form__input input"
+                placeholder="MM/YY"
+                v-maska="'##/##'"
+              />
             </div>
             <div class="popup-form__input-block">
               <label for="" class="popup-form__label">CVC</label>
@@ -92,7 +46,7 @@
                 type="text"
                 placeholder="CVC"
                 class="popup-form__input input"
-                v-mask="'###'"
+                v-maska="'###'"
               />
               <div v-for="error of v$.cvc.$errors" class="popup__error">
                 {{ error.$message }}
@@ -115,10 +69,21 @@
             <div class="popup-crypto__select">
               <div class="popup-crypto__type">
                 {{ selectedCrypto }}
-                <span @click.stop="cryptoListVisible = !cryptoListVisible" class="_icon-arrow"></span>
+                <span
+                  @click.stop="cryptoListVisible = !cryptoListVisible"
+                  class="_icon-arrow"
+                ></span>
               </div>
               <ul v-if="cryptoListVisible" class="popup-crypto__list">
-                <li v-for="crypto in cryptoList" :key="crypto" :class="{ selected: crypto === selectedCrypto }" @click="selectCrypto(crypto)" class="popup-crypto__item">{{ crypto }}</li>
+                <li
+                  v-for="crypto in cryptoList"
+                  :key="crypto"
+                  :class="{ selected: crypto === selectedCrypto }"
+                  @click="selectCrypto(crypto)"
+                  class="popup-crypto__item"
+                >
+                  {{ crypto }}
+                </li>
               </ul>
             </div>
             <button class="popup-crypto__pay blue-button">Pay</button>
@@ -132,10 +97,13 @@
 import { mapActions, mapGetters } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, maxLength, helpers } from "@vuelidate/validators";
-import {TheMask} from 'vue-the-mask'
+import ContactsPopup from "./ContactsPopup.vue";
 export default {
+  props: {
+    selectedPlan: Object
+  },
   components: {
-    TheMask
+    ContactsPopup,
   },
   data() {
     return {
@@ -143,44 +111,27 @@ export default {
       cardNumber: "",
       cvc: "",
       expirationDate: {
-        expirationMonth: 'ММ',
-        expirationYear: 'YY'
+        expirationMonth: "ММ",
+        expirationYear: "YY",
       },
       cryptoListVisible: false,
-      selectedCrypto: 'Bitcoin',
-      cryptoList: ['Bitcoin', 'Crypto2', 'Crypto3', 'Crypto4']
+      selectedCrypto: "Bitcoin",
+      cryptoList: ["Bitcoin", "Crypto2", "Crypto3", "Crypto4"],
     };
   },
   methods: {
     ...mapActions(["changeActivePopup"]),
     async makePayment() {
       const resultValidation = await this.v$.$validate();
-      console.log(resultValidation);
     },
     selectCrypto(cryptoName) {
-      if(cryptoName === this.selectedCrypto) {
-        return
+      if (cryptoName === this.selectedCrypto) {
+        return;
       } else {
-        this.selectedCrypto = cryptoName
-        this.cryptoListVisible = false
+        this.selectedCrypto = cryptoName;
+        this.cryptoListVisible = false;
       }
     },
-    setExpirationDate(e) {
-      if(e.target.value.length <= 2) {
-        this.expirationDate.expirationMonth = e.target.value.slice(0, 2)
-      } else if(e.target.value.length > 2) {
-        this.expirationDate.expirationMonth = e.target.value.slice(2, 4)
-      }
-      if(e.target.value.length > 4) {
-        e.target.value = e.target.value.slice(0, 5)
-        console.log(e.target.value.slice(0, 5))
-        console.log(`value в data ${this.expirationDate}`)
-        return
-      } else {
-        this.expirationDate = e.target.value
-        console.log(this.expirationDate)
-      }
-    }
   },
   validations() {
     return {
@@ -195,8 +146,8 @@ export default {
   computed: {
     ...mapGetters(["activePopup"]),
     formatedExpirationDate() {
-      return `${this.expirationDate.expirationMonth}/${this.expirationDate.expirationYear}`
-    }
+      return `${this.expirationDate.expirationMonth}/${this.expirationDate.expirationYear}`;
+    },
   },
 };
 </script>

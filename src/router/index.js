@@ -4,13 +4,15 @@ import Main from '../views/MainPage'
 import NetflixSub from '../views/NetflixSub';
 import YoutubeSub from '../views/YoutubeSub';
 import SpotifySub from '../views/SpotifySub';
+import FaqPage from '../views/FaqPage'
 
 const routes = [
     { path: '/', component: Main},
     { path: "/profile/:id", component: ProfilePage, props: true },
     { path: '/netflix', component: NetflixSub},  
     { path: '/youtube', component: YoutubeSub},  
-    { path: '/spotify', component: SpotifySub},  
+    { path: '/spotify', component: SpotifySub},
+    { path: '/faq', component: FaqPage }
 ];
 
 const router = createRouter({

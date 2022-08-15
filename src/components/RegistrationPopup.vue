@@ -143,7 +143,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["activePopup"]),
+    ...mapGetters(["activePopup", "getApiKey"]),
   },
   methods: {
     ...mapActions(["changeActivePopup"]),

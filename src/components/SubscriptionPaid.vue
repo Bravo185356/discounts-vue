@@ -32,16 +32,18 @@
               />
             </div>
             <div class="popup-form__input-block">
-              <label for="" class="popup-form__label">Expiration Date</label>
+              <label for="expiration-date" class="popup-form__label">Expiration Date</label>
               <input
+                id="expiration-date"
                 class="popup-form__input input"
                 placeholder="MM/YY"
                 v-maska="'##/##'"
               />
             </div>
             <div class="popup-form__input-block">
-              <label for="" class="popup-form__label">CVC</label>
+              <label for="cvc" class="popup-form__label">CVC</label>
               <input
+                id="cvc"
                 v-model="cvc"
                 type="text"
                 placeholder="CVC"

@@ -8,18 +8,17 @@
     </div>
     <div class="profile__body">
       <div class="profile__sections">
-        <!-- width 450+ -->
+        <!-- width 600+ -->
         <div v-if="!isMobile" class="sections">
           <div
             @click="activeSection = section"
             v-for="section in sectionList"
-            :class="section.icon"
-            class="profile__section _icon-arrow"
+            :class="[{'active-section': activeSection.name === section.name} ,section.icon]"
+            class="profile__section"
           >
             {{ section.name }}
             <span
               @click.stop="profileSectionsDropActive = !profileSectionsDropActive"
-              class="_icon-arrow"
             ></span>
           </div>
         </div>
@@ -129,13 +128,13 @@ export default {
   methods: {
     changeScreenWidth() {
       this.screenWidth = screen.width;
-      screen.width >= 450
+      screen.width >= 600
         ? (this.profileSectionsDropActive = true)
         : (this.profileSectionsDropActive = false);
     },
     changeActiveSection(section) {
       this.activeSection = section;
-      if (screen.width <= 450) {
+      if (screen.width <= 600) {
         this.profileSectionsDropActive = false;
       }
     }
@@ -146,7 +145,7 @@ export default {
       'currentUser'
     ]),
     isMobile() {
-      return this.screenWidth <= 450 ? true : false;
+      return this.screenWidth <= 600 ? true : false;
     },
     nonActiveElements() {
       return this.sectionList.filter(

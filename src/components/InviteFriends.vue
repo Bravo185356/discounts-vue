@@ -1,5 +1,5 @@
 <template>
-    <div class="how-works__invite invite">
+    <div class="invite">
     <div class="invite__text-block">
         <div class="invite__title">Invite friends</div>
         <div class="invite__description">
@@ -9,7 +9,7 @@
       </div>
       <div class="invite__link">
         <div class="invite__help">Click on the link</div>
-        <a href="#" class="invite__button _icon-file-copy">Discounts On Services</a>
+        <a href="#" class="invite__button _icon-file-copy"><span>Discounts On Services</span></a>
       </div>
     </div>
 </template>

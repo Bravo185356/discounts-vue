@@ -72,9 +72,6 @@
     position: relative;
     background: #ECF3FB;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
 }
 [class*="__container"] {
     max-width: 1220px;
@@ -99,12 +96,27 @@
 .sub-request__body {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #1749B3;
     border-radius: 24px;
     padding: 40px 20px;
     @include adaptiveValue('gap', 80, 20, 0);
 }
-
+.sub-request__button.white-button {
+    flex-shrink: 0;
+    @include adaptiveValue('width', 287, 236,0);
+    color: black;
+    height: 48px;
+    font-weight: 700;
+    &:hover {
+        border: 1px solid white;
+        color: white;
+    }
+    &:active {
+        background-color: rgba($color: white, $alpha: 0.8);
+        color: black;
+    }
+}
 .sub-request__title {
     font-size: 22px;
     line-height: 31px;
@@ -116,18 +128,7 @@
     line-height: 24px;
 
 }
-.sub-request__button {
-    flex-shrink: 0;
-    @include adaptiveValue('width', 287, 236,0);
-    background-color: white;
-    border-radius: 12px;
-    color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 48px;
-    font-weight: 700;
-}
+
 .drop-menu {
     position: absolute;
     min-width: 100%;
@@ -179,10 +180,13 @@
     color: rgb(226, 35, 35);
     margin: 10px 0px
 }
-::-webkit-scrollbar {
-    
-}
-::-webkit-scrollbar-track {
-    background-color: #1749B3
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 150
 }
 @import '_media.scss';

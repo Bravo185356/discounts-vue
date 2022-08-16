@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper" :class="{ 'page-shift' : activePopup !== '' }">
+    <div v-if="activeLoader" class="loader"></div>
     <page-header />
     <div class="wrapper__container">
       <router-view />
@@ -25,6 +26,7 @@ export default {
   data() {
     return {
       API_KEY: "AIzaSyCRYrVhJoaW0yinGmIi-MR9GMOzWBpaTZg",
+      activeLoader: true
     };
   },
   methods: {
@@ -82,8 +84,9 @@ export default {
   async mounted() {
     this.$store.dispatch("setApiKey", this.API_KEY);
     if (localStorage.getItem("accessToken")) {
-      this.getUserInfo();
+      await this.getUserInfo();
     }
+    this.activeLoader = false
   },
 };
 </script>

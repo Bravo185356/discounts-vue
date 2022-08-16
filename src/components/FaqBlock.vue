@@ -25,7 +25,7 @@
                 <template #answer>Answer</template>
               </faq-question>
             </div>
-            <div class="faq__support black-button">Support</div>
+            <button class="faq__support black-button">Support</button>
           </div>
         </div>
       </section>

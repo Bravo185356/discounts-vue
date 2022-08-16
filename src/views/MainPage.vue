@@ -130,7 +130,7 @@
                 Disney, Amazon Prime, Microsoft Office, Microsoft Windows
               </div>
             </div>
-            <div class="sub-request__button">Request</div>
+            <button class="sub-request__button white-button">Request</button>
           </div>
         </div>
       </section>

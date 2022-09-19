@@ -38,12 +38,15 @@
               <div v-for="error of v$.loginInputs.password.$errors" class="popup__error">
                 {{ error.$message }}
               </div>
-              <input
+              <form @submit.prevent="signInEmailPassword" class="password-input">
+                <input
                 v-model="loginInputs.password"
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 class="popup-form__input input"
                 id="password-input"
-              />
+                />
+                <span @click="showPassword = !showPassword">+</span>
+              </form>
             </div>
 
             <div class="popup-form__buttons">
@@ -68,13 +71,13 @@
             </div>
             <div class="login-alternative__row">
               <a href="#" class="login-alternative__item">
-                <img src="../assets/images/google-login.png" alt="" />
+                <img src="@/assets/images/google-login.png" alt="" />
               </a>
               <a href="#" class="login-alternative__item">
-                <img src="../assets/images/facebook-login.png" alt="" />
+                <img src="@/assets/images/facebook-login.png" alt="" />
               </a>
               <a href="#" class="login-alternative__item">
-                <img src="../assets/images/apple-login.png" alt="" />
+                <img src="@/assets/images/apple-login.png" alt="" />
               </a>
             </div>
           </div>
@@ -101,6 +104,7 @@ export default {
       },
       v$: useVuelidate(),
       authError: null,
+      showPassword: false
     };
   },
   validations() {
@@ -137,6 +141,7 @@ export default {
         );
 
         let userInfo = await response.json();
+        console.log(userInfo)
         if (userInfo.error) {
           this.authError = userInfo.error.message;
           return;
@@ -144,16 +149,18 @@ export default {
         localStorage.setItem("accessToken", userInfo.idToken);
         localStorage.setItem("refreshToken", userInfo.refreshToken);
 
-        this.changeActivePopup("");
         this.$emit("successLogin");
 
         this.loginInputs.email = "";
         this.loginInputs.password = "";
+        this.showPassword = false
+        
         this.v$.$reset()
+        this.changeActivePopup("");
       }
     },
     ...mapActions(["changeActivePopup"]),
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

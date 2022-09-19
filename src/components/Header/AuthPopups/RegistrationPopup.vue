@@ -56,12 +56,15 @@
               >
                 {{ error.$message }}
               </div>
-              <input
+              <form class="password-input">
+                <input
                 v-model="registrationInputs.password"
-                type="password"
+                :type="showPassword ? 'text' : 'password'"
                 class="popup-form__input input"
                 id="password-input"
-              />
+                />
+                <span @click="showPassword = !showPassword">+</span>
+              </form>
             </div>
             <div class="popup-form__buttons">
               <div
@@ -89,13 +92,13 @@
             </div>
             <div class="login-alternative__row">
               <a href="#" class="login-alternative__item">
-                <img src="../assets/images/google-login.png" alt="" />
+                <img src="@/assets/images/google-login.png" alt="" />
               </a>
               <a href="#" class="login-alternative__item">
-                <img src="../assets/images/facebook-login.png" alt="" />
+                <img src="@/assets/images/facebook-login.png" alt="" />
               </a>
               <a href="#" class="login-alternative__item">
-                <img src="../assets/images/apple-login.png" alt="" />
+                <img src="@/assets/images/apple-login.png" alt="" />
               </a>
             </div>
           </div>
@@ -119,6 +122,7 @@ export default {
       v$: useVuelidate(),
       checkboxState: false,
       showCheckboxErrorMessage: false,
+      showPassword: false
     };
   },
   validations() {
@@ -167,16 +171,16 @@ export default {
         );
 
         let newUserInfo = await response.json();
-
-        this.changeActivePopup("");
+        this.sendEmailVerification(newUserInfo.idToken);
 
         this.registrationInputs.name = "";
         this.registrationInputs.email = "";
         this.registrationInputs.password = "";
         this.showCheckboxErrorMessage = false;
+        this.showPassword = false
 
-        this.sendEmailVerification(newUserInfo.idToken);
         this.v$.$reset()
+        this.changeActivePopup("");
       }
     },
     async sendEmailVerification(idToken) {

@@ -102,7 +102,10 @@
     </div>
     <invite-friends></invite-friends>
   </section>
-  <div v-else class="">Вы не залогинены!</div>
+  <section class="require__login" v-else>
+    <div>Войдите в свой профиль, чтобы посмотреть информацию о пользователе</div>
+    <button class="blue-button">Войти</button>
+  </section>
 </template>
 <script>
 import InviteFriends from "../components/InviteFriends.vue";

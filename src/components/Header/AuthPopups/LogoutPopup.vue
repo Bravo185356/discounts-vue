@@ -1,5 +1,5 @@
 <template lang="">
-  <div class="popup popup_no-fullscreen">
+  <div v-if="activePopup === 'logout'" class="popup popup_no-fullscreen">
     <div class=" popup__body ">
       <div class="popup__content" v-scroll-lock="true">
         <div class="popup__header">
@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 export default {
   methods: {
     logout() {
@@ -34,6 +34,9 @@ export default {
       'isLogined'
     ])
   },
+  computed: {
+    ...mapGetters(['activePopup'])
+  }
 };
 </script>
 <style lang=""></style>

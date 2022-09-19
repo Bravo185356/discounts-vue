@@ -1,27 +1,33 @@
 <template>
-  <div class="wrapper" :class="{ 'page-shift' : activePopup !== '' }">
+  <div class="wrapper">
     <div v-if="activeLoader" class="loader"></div>
     <page-header />
     <div class="wrapper__container">
       <router-view />
     </div>
     <page-footer />
-    <auth-popups @success-login="successLogin" />
-    <logout-popup v-if="activePopup === 'confirm'" />
+    <login-popup @success-login="successLogin" />
+    <registration-popup />
+    <forgot-password />
+    <logout-popup /> 
   </div>
 </template>
 <script>
-import AuthPopups from "./components/AuthPopups.vue";
-import PageHeader from "./components/PageHeader.vue";
+import PageHeader from "./components/Header/PageHeader.vue";
 import PageFooter from "./components/PageFooter.vue";
-import LogoutPopup from "./components/LogoutPopup.vue";
+import LogoutPopup from "./components/Header/AuthPopups/LogoutPopup.vue";
+import LoginPopup from './components/Header/AuthPopups/LoginPopup.vue'
+import RegistrationPopup from './components/Header/AuthPopups/RegistrationPopup.vue';
+import ForgotPassword from './components/Header/AuthPopups/ForgotPassword.vue'
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
     PageHeader,
-    AuthPopups,
     PageFooter,
     LogoutPopup,
+    RegistrationPopup,
+    ForgotPassword,
+    LoginPopup
   },
   data() {
     return {
@@ -67,8 +73,6 @@ export default {
       );
       let newTokens = await response.json();
       if (newTokens.error) {
-        console.log(localStorage.getItem("refreshToken"));
-        console.log(newTokens.error);
         return;
       }
 

@@ -2,7 +2,7 @@
   <header class="header">
     <div class="header__container">
       <router-link to="/" class="header__logo">
-        <img src="../assets/images/logo.png" alt="Логотип" />
+        <img src="@/assets/images/logo.png" alt="Логотип" />
         <div class="header__name">DiscountsOnServices</div>
       </router-link>
       <nav class="header__menu menu">
@@ -135,7 +135,7 @@ export default {
   methods: {
     ...mapActions(["changeActivePopup"]),
     logout() {
-      this.changeActivePopup("confirm");
+      this.changeActivePopup("logout");
 
       this.profileMenuOpen = false;
     },

@@ -52,7 +52,7 @@
 <script>
 import SubscriptionPaid from '../components/SubscriptionPaid.vue'
 import InviteFriends from "../components/InviteFriends.vue";
-import FaqBlock from "../components/FaqBlock.vue";
+import FaqBlock from "../components/FAQ/FaqBlock.vue";
 import {mapActions} from 'vuex'
 export default {
   components: {

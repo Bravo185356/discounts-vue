@@ -39,6 +39,7 @@
 import { required, email, minLength, helpers } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { mapActions, mapGetters } from "vuex";
+import { FetchAPI } from "@/API/fetch.js";
 export default {
   data() {
     return {
@@ -50,16 +51,11 @@ export default {
     async sendResetCode() {
       const resultValidation = await this.v$.$validate();
       if (resultValidation) {
-        let response = await fetch(
-          `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${this.getApiKey}`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              requestType: "PASSWORD_RESET",
-              email: this.resetPasswordEmail,
-            }),
-          }
-        );
+        const requestBody = {
+          requestType: "PASSWORD_RESET",
+          email: this.resetPasswordEmail,
+        };
+        await FetchAPI.resetPassword(requestBody);
       }
     },
     ...mapActions(["changeActivePopup"]),
@@ -70,7 +66,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["activePopup", "getApiKey"]),
+    ...mapGetters(["activePopup"]),
   },
 };
 </script>

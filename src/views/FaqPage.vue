@@ -11,8 +11,3 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped>
-    .faq {
-        padding-top: 60px;
-    }
-</style>

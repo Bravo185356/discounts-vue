@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div v-if="activePopup === 'logout'" class="popup popup_no-fullscreen">
     <div class=" popup__body ">
       <div class="popup__content" v-scroll-lock="true">
@@ -39,4 +39,3 @@ export default {
   }
 };
 </script>
-<style lang=""></style>

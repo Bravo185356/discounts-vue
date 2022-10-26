@@ -1,5 +1,4 @@
-<template lang="">
-  
+<template>
   <transition name="popup">
     <div
       v-if="activePopup === 'paid'"

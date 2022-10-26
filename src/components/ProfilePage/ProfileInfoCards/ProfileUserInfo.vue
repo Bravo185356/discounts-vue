@@ -37,9 +37,6 @@
 <script>
 import {mapGetters} from 'vuex'
 export default {
-    props: {
-        currentUser: Object
-    },
     computed: {
         ...mapGetters(["isLogined", "currentUser"]),
     }

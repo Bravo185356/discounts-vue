@@ -29,7 +29,7 @@
       <profile-user-info :currentUser="currentUser" v-if="activeSection.name === 'Account Info'" />
       <profile-subs-info v-if="activeSection.name === 'My subscriptions'" />
     </div>
-    <invite-friends></invite-friends>
+    <invite-friends />
   </section>
   <section class="require__login" v-else>
     <div>Войдите в свой профиль, чтобы посмотреть информацию о пользователе</div>
@@ -43,6 +43,7 @@ import ProfileSubsInfo from '../components/ProfilePage/ProfileInfoCards/ProfileS
 import ProfileUserInfo from '../components/ProfilePage/ProfileInfoCards/ProfileUserInfo.vue'
 import InviteFriends from "../components/InviteFriends.vue";
 import { mapGetters } from "vuex";
+import {FetchAPI} from '@/API/fetch.js'
 export default {
   components: {
     InviteFriends,
@@ -88,22 +89,7 @@ export default {
   },
   async mounted() {
     window.addEventListener("resize", this.changeScreenWidth);
-
     this.changeScreenWidth();
-
-    if (this.isLogined) {
-      let response = await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${this.API_KEY}`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            idToken: localStorage.getItem("accessToken"),
-          }),
-          "Content-Type": "application/json",
-        }
-      );
-      let userInfo = await response.json();
-    }
   },
   destroyed() {
     window.removeEventListener("resize", this.changeScreenWidth);

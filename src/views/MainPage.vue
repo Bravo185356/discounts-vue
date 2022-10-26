@@ -89,7 +89,7 @@
               <div class="steps__description">Pay your bill with PayPal</div>
             </div>
           </div>
-          <invite-friends></invite-friends>
+          <invite-friends />
         </div>
       </section>
       <section class="about">
@@ -118,7 +118,7 @@
           </div>
         </div>
       </section>
-      <faq-block></faq-block>
+      <faq-block />
       <section class="sub-request">
         <div class="sub-request__container">
           <div class="sub-request__body">
@@ -146,5 +146,3 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-</style>

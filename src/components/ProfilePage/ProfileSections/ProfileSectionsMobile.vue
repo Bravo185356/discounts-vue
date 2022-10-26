@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div class="sections-mobile">
     <div :class="activeSection.icon" class="profile__section _icon-arrow">
       {{ activeSection.name }}

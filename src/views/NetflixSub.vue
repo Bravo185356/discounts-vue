@@ -48,9 +48,9 @@
       </div>
     </div>
   </div>
-  <invite-friends></invite-friends>
-  <faq-block></faq-block>
-  <subscription-paid :selectedPlan="selectedPlan"></subscription-paid>
+  <invite-friends />
+  <faq-block />
+  <subscription-paid :selectedPlan="selectedPlan" />
 </template>
 <script>
 import SubscriptionPaid from "../components/SubscriptionPaid.vue";
@@ -103,7 +103,6 @@ export default {
   },
   methods: {
     checkAuth(subInfo) {
-      console.log(subInfo)
       if (this.isLogined === false) {
         alert("Залогиньтесь, чтобы сделать покупку");
         return;
@@ -130,10 +129,7 @@ export default {
       }
       return 
     }
-  },
-  updated() {
-    console.log(this.selectedPlan)
-  },
+  }
 };
 </script>
 <style lang="scss">

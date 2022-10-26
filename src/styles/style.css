@@ -701,6 +701,7 @@
 
 .faq {
   margin-top: calc(40px + 80 * ((100vw - 320px) / 1600));
+  padding-top: 60px;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -1252,7 +1253,6 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: calc(28px + 32 * ((100vw - 320px) / 1600));
-  padding-top: calc(48px + 32 * ((100vw - 320px) / 1600));
 }
 
 .profile__title.title {

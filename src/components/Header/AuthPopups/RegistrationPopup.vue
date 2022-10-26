@@ -58,10 +58,10 @@
               </div>
               <form class="password-input">
                 <input
-                v-model="registrationInputs.password"
-                :type="showPassword ? 'text' : 'password'"
-                class="popup-form__input input"
-                id="password-input"
+                  v-model="registrationInputs.password"
+                  :type="showPassword ? 'text' : 'password'"
+                  class="popup-form__input input"
+                  id="password-input"
                 />
                 <span @click="showPassword = !showPassword">+</span>
               </form>
@@ -111,6 +111,7 @@
 import { mapActions, mapGetters } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
+import { FetchAPI } from "@/API/fetch.js";
 export default {
   data() {
     return {
@@ -122,7 +123,7 @@ export default {
       v$: useVuelidate(),
       checkboxState: false,
       showCheckboxErrorMessage: false,
-      showPassword: false
+      showPassword: false,
     };
   },
   validations() {
@@ -147,7 +148,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["activePopup", "getApiKey"]),
+    ...mapGetters(["activePopup"]),
   },
   methods: {
     ...mapActions(["changeActivePopup"]),
@@ -158,42 +159,31 @@ export default {
         return;
       }
       if (resultValidation) {
-        let response = await fetch(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.getApiKey}`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              email: this.registrationInputs.email,
-              password: this.registrationInputs.password,
-              returnSecureToken: true,
-            }),
-          }
-        );
+        const requestBody = {
+          email: this.registrationInputs.email,
+          password: this.registrationInputs.password,
+          returnSecureToken: true,
+        };
+        let newUserInfo = await FetchAPI.createNewUser(requestBody);
 
-        let newUserInfo = await response.json();
         this.sendEmailVerification(newUserInfo.idToken);
 
         this.registrationInputs.name = "";
         this.registrationInputs.email = "";
         this.registrationInputs.password = "";
         this.showCheckboxErrorMessage = false;
-        this.showPassword = false
+        this.showPassword = false;
 
-        this.v$.$reset()
+        this.v$.$reset();
         this.changeActivePopup("");
       }
     },
     async sendEmailVerification(idToken) {
-      await fetch(
-        `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${this.getApiKey}`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            requestType: "VERIFY_EMAIL",
-            idToken,
-          }),
-        }
-      );
+      const requestBody = {
+        requestType: "VERIFY_EMAIL",
+        idToken,
+      };
+      await FetchAPI.sendEmailVerification(requestBody)
     },
   },
 };

@@ -94,6 +94,7 @@
 import { mapActions, mapGetters } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
+import {FetchAPI} from '@/API/fetch.js'
 export default {
   emits: ["successLogin"],
   data() {
@@ -122,26 +123,19 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["activePopup", 'getApiKey']),
+    ...mapGetters(["activePopup"]),
   },
   methods: {
     async signInEmailPassword() {
       const resultValidation = await this.v$.$validate();
       if (resultValidation) {
-        let response = await fetch(
-          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.getApiKey}`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              email: this.loginInputs.email,
-              password: this.loginInputs.password,
-              returnSecureToken: true,
-            }),
-          }
-        );
+        const requestBody = {
+          email: this.loginInputs.email,
+          password: this.loginInputs.password,
+          returnSecureToken: true,
+        }
+        let userInfo = await FetchAPI.login(requestBody)
 
-        let userInfo = await response.json();
-        console.log(userInfo)
         if (userInfo.error) {
           this.authError = userInfo.error.message;
           return;

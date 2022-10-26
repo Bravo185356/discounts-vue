@@ -5,7 +5,6 @@
     display: flex;
     justify-content: space-between;
     @include adaptiveValue('margin-bottom', 60, 28, 0);
-    @include adaptiveValue('padding-top', 80, 48, 0);
 }
 .profile__title {
     &.title {

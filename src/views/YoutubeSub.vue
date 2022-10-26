@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <div class="subscribe-plans">
     <div class="subscribe-plans__title title">Choose a Youtube Plan</div>
     <div class="subscribe-plans__description">
@@ -25,7 +25,10 @@
         <div class="plans__title title">{{ sub.name }}</div>
         <div class="plans-advantages">
           <ul class="plans-advantages__list">
-            <li v-for="advantage in sub.advantages" class="plans-advantages__item _icon-check">
+            <li
+              v-for="advantage in sub.advantages"
+              class="plans-advantages__item _icon-check"
+            >
               {{ advantage }}
             </li>
           </ul>
@@ -45,20 +48,20 @@
       </div>
     </div>
   </div>
-  <invite-friends></invite-friends>
-  <faq-block></faq-block>
+  <invite-friends />
+  <faq-block />
   <subscription-paid />
 </template>
 <script>
-import SubscriptionPaid from '../components/SubscriptionPaid.vue'
+import SubscriptionPaid from "../components/SubscriptionPaid.vue";
 import InviteFriends from "../components/InviteFriends.vue";
 import FaqBlock from "../components/FAQ/FaqBlock.vue";
-import {mapActions} from 'vuex'
+import { mapActions } from "vuex";
 export default {
   components: {
     InviteFriends,
     FaqBlock,
-    SubscriptionPaid
+    SubscriptionPaid,
   },
   data() {
     return {
@@ -66,33 +69,28 @@ export default {
       subsInfo: [
         {
           name: "Music",
-          advantages: [
-            "Listen to music without ads, in the background and offline"
-          ],
+          advantages: ["Listen to music without ads, in the background and offline"],
           price: 60,
         },
         {
           name: "Premium",
           advantages: [
-            "YouTube and YouTube Music without ads, in the background and offline"
+            "YouTube and YouTube Music without ads, in the background and offline",
           ],
           price: 80,
-        }
+        },
       ],
     };
   },
   methods: {
-        checkAuth(subInfo) {
-            console.log(subInfo)
-            if(this.isLogined === false) {
-                alert('Залогиньтесь, чтобы сделать покупку')
-                return
-            }
-            this.changeActivePopup('paid')
-        },
-        ...mapActions(['changeActivePopup'])
+    checkAuth(subInfo) {
+      if (this.isLogined === false) {
+        alert("Залогиньтесь, чтобы сделать покупку");
+        return;
+      }
+      this.changeActivePopup("paid");
     },
+    ...mapActions(["changeActivePopup"]),
+  },
 };
 </script>
-<style lang="">
-</style>

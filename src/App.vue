@@ -1,12 +1,12 @@
 <template>
-  <div class="wrapper">
+  <div @click="isDropActive = false" class="wrapper">
     <div v-if="activeLoader" class="loader"></div>
     <page-header />
     <div class="wrapper__container">
-      <router-view />
+        <router-view />
     </div>
     <page-footer />
-    <login-popup @success-login="successLogin" />
+    <login-popup @success-login="getUserInfo" />
     <registration-popup />
     <forgot-password />
     <logout-popup />
@@ -33,13 +33,11 @@ export default {
   data() {
     return {
       activeLoader: true,
+      isDropActive: false
     };
   },
   methods: {
     ...mapActions(["currentUser", "isLogined"]),
-    successLogin() {
-      this.getUserInfo();
-    },
     async getUserInfo() {
       const requestBody = {
         idToken: localStorage.getItem("accessToken"),
@@ -57,7 +55,7 @@ export default {
         refresh_token: localStorage.getItem("refreshToken"),
         grant_type: "refresh_token",
       };
-      let newTokens = await FetchAPI.exchangeRefreshToken(requestBody)
+      let newTokens = await FetchAPI.exchangeRefreshToken(requestBody);
       if (newTokens.error) {
         return;
       }

@@ -9,13 +9,13 @@
         <ul class="menu__list">
           <li class="menu__item subscriptions">
             <a
-              @click.prevent="subscriptionDrop = !subscriptionDrop"
+              @click.prevent="openDropMenu('subscriptionDrop')"
               href="#"
               class="menu__link _icon-arrow"
               >Subscriptions</a
             >
             <transition name="drop-menu">
-              <div v-if="subscriptionDrop" class="subscriptions__drop drop-menu">
+              <div v-if="dropMenu.subscriptionDrop" class="subscriptions__drop drop-menu">
                 <ul class="subscriptions__list">
                   <li class="subscriptions__item">
                     <router-link
@@ -48,7 +48,9 @@
               </div>
             </transition>
           </li>
-          <li class="menu__item"><router-link to="/faq" class="menu__link">FAQ</router-link></li>
+          <li class="menu__item">
+            <router-link to="/faq" class="menu__link">FAQ</router-link>
+          </li>
           <li class="menu__item"><a href="#" class="menu__link">Support</a></li>
           <li class="menu__item"><a href="#" class="menu__link">About</a></li>
         </ul>
@@ -58,11 +60,11 @@
         <div class="_icon-telegram"></div>
       </div>
       <div class="header__language language">
-        <div @click="languageDrop = !languageDrop" class="language__current _icon-arrow">
+        <div @click="openDropMenu('languageDrop')" class="language__current _icon-arrow">
           en
         </div>
         <transition name="drop-menu">
-          <div v-if="languageDrop" class="language__drop drop-menu">
+          <div v-if="dropMenu.languageDrop" class="language__drop drop-menu">
             <ul class="language__list">
               <li class="language__item">
                 <a class="language__link" href="#">English</a>
@@ -86,16 +88,16 @@
           Log in
         </button>
         <button
-          @click="profileMenuOpen = !profileMenuOpen"
+          @click="openDropMenu('profileMenuOpen')"
           v-else
           class="header__profile _icon-profile"
         >
           <span>Profile</span>
         </button>
-        <div v-if="profileMenuOpen" class="header__profile-menu profile-menu">
+        <div v-if="dropMenu.profileMenuOpen" class="header__profile-menu profile-menu">
           <ul class="profile-menu__list">
             <router-link
-              @click="profileMenuOpen = !profileMenuOpen"
+              @click="closeAllDrops"
               :to="profileURL"
               class="profile-menu__item"
               >My Profile</router-link
@@ -126,9 +128,11 @@ export default {
   },
   data() {
     return {
-      profileMenuOpen: false,
-      subscriptionDrop: false,
-      languageDrop: false,
+      dropMenu: {
+        profileMenuOpen: false,
+        languageDrop: false,
+        subscriptionDrop: false,
+      },
       burgerMenuOpen: false,
     };
   },
@@ -136,12 +140,20 @@ export default {
     ...mapActions(["changeActivePopup"]),
     logout() {
       this.changeActivePopup("logout");
-
-      this.profileMenuOpen = false;
+      this.dropMenus.profileMenuOpen = false;
     },
     closeAllDrops() {
       this.subscriptionDrop = false;
       this.languageDrop = false;
+      this.profileMenuOpen = false;
+    },
+    openDropMenu(dropName) {
+      for (const menu in this.$data.dropMenu) {
+        if (this.$data.dropMenu[menu] === true && menu !== dropName) {
+          this.$data.dropMenu[menu] = false;
+        }
+      }
+      this.$data.dropMenu[dropName] = !this.$data.dropMenu[dropName];
     },
     changeBurgerState() {
       this.burgerMenuOpen = !this.burgerMenuOpen;

@@ -43,7 +43,7 @@ import ProfileSubsInfo from '../components/ProfilePage/ProfileInfoCards/ProfileS
 import ProfileUserInfo from '../components/ProfilePage/ProfileInfoCards/ProfileUserInfo.vue'
 import InviteFriends from "../components/InviteFriends.vue";
 import { mapGetters } from "vuex";
-import {FetchAPI} from '@/API/fetch.js'
+import {AuthAPI} from '@/API/Auth.js'
 export default {
   components: {
     InviteFriends,

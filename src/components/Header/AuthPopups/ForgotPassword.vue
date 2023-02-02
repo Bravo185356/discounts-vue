@@ -14,7 +14,7 @@
           </div>
           <form class="popup-form">
             <label class="popup-form__label" for="email">Email Address</label>
-            <div v-for="error of v$.resetPasswordEmail.$errors" class="popup__error">
+            <div v-for="error of v$.resetPasswordEmail.$errors" class="popup-form__error">
               {{ error.$message }}
             </div>
             <input
@@ -39,7 +39,7 @@
 import { required, email, minLength, helpers } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { mapActions, mapGetters } from "vuex";
-import { FetchAPI } from "@/API/fetch.js";
+import { AuthAPI } from "@/API/Auth.js";
 export default {
   data() {
     return {
@@ -51,11 +51,7 @@ export default {
     async sendResetCode() {
       const resultValidation = await this.v$.$validate();
       if (resultValidation) {
-        const requestBody = {
-          requestType: "PASSWORD_RESET",
-          email: this.resetPasswordEmail,
-        };
-        await FetchAPI.resetPassword(requestBody);
+        FetchAPI.resetPassword(email);
       }
     },
     ...mapActions(["changeActivePopup"]),

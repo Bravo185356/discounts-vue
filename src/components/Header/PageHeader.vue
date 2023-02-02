@@ -140,7 +140,7 @@ export default {
     ...mapActions(["changeActivePopup"]),
     logout() {
       this.changeActivePopup("logout");
-      this.dropMenus.profileMenuOpen = false;
+      this.dropMenu.profileMenuOpen = false;
     },
     closeAllDrops() {
       this.subscriptionDrop = false;
@@ -167,7 +167,7 @@ export default {
       return this.$store.getters.isLogined;
     },
     ...mapGetters(["isLogined", "currentUser"]),
-  },
+  }
 };
 </script>
 <style lang="scss">

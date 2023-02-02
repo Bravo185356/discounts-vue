@@ -17,12 +17,12 @@
                 Create an account
               </button>
             </div>
-            <div v-if="authError" class="popup__error">Ошибка: {{ authError }}</div>
+            <div v-if="authError" class="popup-form__error">Ошибка: {{ authError }}</div>
           </div>
           <form class="popup-form">
             <div class="popup-form__item">
               <label for="email-input" class="popup-form__label">Email Address</label>
-              <div v-for="error of v$.loginInputs.email.$errors" class="popup__error">
+              <div v-for="error of v$.loginInputs.email.$errors" class="popup-form__error">
                 {{ error.$message }}
               </div>
               <input
@@ -35,7 +35,7 @@
             </div>
             <div class="popup-form__item">
               <label for="password-input" class="popup-form__label">Password</label>
-              <div v-for="error of v$.loginInputs.password.$errors" class="popup__error">
+              <div v-for="error of v$.loginInputs.password.$errors" class="popup-form__error">
                 {{ error.$message }}
               </div>
               <form @submit.prevent="signInEmailPassword" class="password-input">
@@ -94,9 +94,8 @@
 import { mapActions, mapGetters } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
-import {FetchAPI} from '@/API/fetch.js'
+import {AuthAPI} from '@/API/Auth.js'
 export default {
-  emits: ["successLogin"],
   data() {
     return {
       loginInputs: {
@@ -129,21 +128,14 @@ export default {
     async signInEmailPassword() {
       const resultValidation = await this.v$.$validate();
       if (resultValidation) {
-        const requestBody = {
-          email: this.loginInputs.email,
-          password: this.loginInputs.password,
-          returnSecureToken: true,
-        }
-        let userInfo = await FetchAPI.login(requestBody)
-
+        let userInfo = await AuthAPI.login(this.loginInputs)
         if (userInfo.error) {
           this.authError = userInfo.error.message;
           return;
         }
-        localStorage.setItem("accessToken", userInfo.idToken);
-        localStorage.setItem("refreshToken", userInfo.refreshToken);
 
-        this.$emit("successLogin");
+        this.currentUser(userInfo.users[0]);
+        this.isLogined(true);
 
         this.loginInputs.email = "";
         this.loginInputs.password = "";
@@ -153,7 +145,7 @@ export default {
         this.changeActivePopup("");
       }
     },
-    ...mapActions(["changeActivePopup"]),
+    ...mapActions(["changeActivePopup", "currentUser", "isLogined"]),
   }
 };
 </script>

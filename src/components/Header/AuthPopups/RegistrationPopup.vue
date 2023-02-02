@@ -16,11 +16,12 @@
             </div>
           </div>
           <form class="popup-form">
+            <div v-if="errorMessage" class="popup-form__error">Ошибка: {{ errorMessage }}</div>
             <div class="popup-form__item">
               <label for="name-input" class="popup-form__label">User name</label>
               <div
                 v-for="error of v$.registrationInputs.name.$errors"
-                class="popup__error"
+                class="popup-form__error"
               >
                 {{ error.$message }}
               </div>
@@ -36,7 +37,7 @@
               <label for="email-input" class="popup-form__label">Email Address</label>
               <div
                 v-for="error of v$.registrationInputs.email.$errors"
-                class="popup__error"
+                class="popup-form__error"
               >
                 {{ error.$message }}
               </div>
@@ -52,7 +53,7 @@
               <label for="password-input" class="popup-form__label">Password</label>
               <div
                 v-for="error of v$.registrationInputs.password.$errors"
-                class="popup__error"
+                class="popup-form__error"
               >
                 {{ error.$message }}
               </div>
@@ -69,7 +70,7 @@
             <div class="popup-form__buttons">
               <div
                 v-if="showCheckboxErrorMessage && checkboxState === false"
-                class="popup__error"
+                class="popup-form__error"
               >
                 Необходимо подтверждение
               </div>
@@ -111,7 +112,7 @@
 import { mapActions, mapGetters } from "vuex";
 import useVuelidate from "@vuelidate/core";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
-import { FetchAPI } from "@/API/fetch.js";
+import { AuthAPI } from "@/API/Auth.js";
 export default {
   data() {
     return {
@@ -124,6 +125,7 @@ export default {
       checkboxState: false,
       showCheckboxErrorMessage: false,
       showPassword: false,
+      errorMessage: ''
     };
   },
   validations() {
@@ -159,14 +161,11 @@ export default {
         return;
       }
       if (resultValidation) {
-        const requestBody = {
-          email: this.registrationInputs.email,
-          password: this.registrationInputs.password,
-          returnSecureToken: true,
-        };
-        let newUserInfo = await FetchAPI.createNewUser(requestBody);
-
-        this.sendEmailVerification(newUserInfo.idToken);
+        const newUserInfo = await AuthAPI.createNewUser(this.registrationInputs);
+        if(newUserInfo.error) {
+          this.errorMessage = newUserInfo.error.message
+          return
+        }
 
         this.registrationInputs.name = "";
         this.registrationInputs.email = "";
@@ -177,14 +176,7 @@ export default {
         this.v$.$reset();
         this.changeActivePopup("");
       }
-    },
-    async sendEmailVerification(idToken) {
-      const requestBody = {
-        requestType: "VERIFY_EMAIL",
-        idToken,
-      };
-      await FetchAPI.sendEmailVerification(requestBody)
-    },
+    }
   },
 };
 </script>

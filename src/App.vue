@@ -6,7 +6,7 @@
         <router-view />
     </div>
     <page-footer />
-    <login-popup @success-login="getUserInfo" />
+    <login-popup />
     <registration-popup />
     <forgot-password />
     <logout-popup />
@@ -19,7 +19,7 @@ import LogoutPopup from "./components/Header/AuthPopups/LogoutPopup.vue";
 import LoginPopup from "./components/Header/AuthPopups/LoginPopup.vue";
 import RegistrationPopup from "./components/Header/AuthPopups/RegistrationPopup.vue";
 import ForgotPassword from "./components/Header/AuthPopups/ForgotPassword.vue";
-import { FetchAPI } from "@/API/fetch.js";
+import { AuthAPI } from "@/API/Auth.js";
 import { mapGetters, mapActions } from "vuex";
 export default {
   components: {
@@ -38,43 +38,20 @@ export default {
   },
   methods: {
     ...mapActions(["currentUser", "isLogined"]),
-    async getUserInfo() {
-      const requestBody = {
-        idToken: localStorage.getItem("accessToken"),
-      };
-      let userInfo = await FetchAPI.getUserInfo(requestBody);
-      if (userInfo.error) {
-        this.exchangeRefreshToken();
-      } else {
-        this.currentUser(userInfo.users[0]);
-        this.isLogined(true);
-      }
-    },
-    async exchangeRefreshToken() {
-      const requestBody = {
-        refresh_token: localStorage.getItem("refreshToken"),
-        grant_type: "refresh_token",
-      };
-      let newTokens = await FetchAPI.exchangeRefreshToken(requestBody);
-      if (newTokens.error) {
-        return;
-      }
-
-      localStorage.setItem("accessToken", newTokens.id_token);
-      localStorage.setItem("refreshToken", newTokens.refresh_token);
-
-      this.getUserInfo();
-    },
   },
   computed: {
     ...mapGetters(["activePopup", "getApiKey"]),
   },
   async mounted() {
     if (localStorage.getItem("accessToken")) {
-      await this.getUserInfo();
+      const authResult = await AuthAPI.getUserInfo()
+      console.log(authResult)
+      if(!authResult.error) {
+        this.currentUser(authResult.users[0]);
+        this.isLogined(true);
+      }
     }
     this.activeLoader = false;
   },
 };
 </script>
-<style lang=""></style>

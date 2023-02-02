@@ -13,13 +13,13 @@
           <div class="footer-column__title">Subscriptions</div>
           <ul class="footer-column__list">
             <li class="footer-column__item">
-              <a href="#" class="footer-column__link">Netflix</a>
+              <router-link to="/netflix" class="footer-column__link" href="#">Netflix</router-link>
             </li>
             <li class="footer-column__item">
-              <a href="#" class="footer-column__link">YouTube Premium</a>
+              <router-link to="/netflix" class="footer-column__link" href="#">YouTube Premium</router-link>
             </li>
             <li class="footer-column__item">
-              <a href="#" class="footer-column__link">Spotify</a>
+              <router-link to="/netflix" class="footer-column__link" href="#">Spotify</router-link>
             </li>
           </ul>
         </div>
@@ -43,12 +43,7 @@
             <div class="_icon-whatsapp"></div>
           </div>
           <div class="footer-column__language footer-language">
-            <div
-              class="footer-column__language-current _icon-arrow"
-              @click="languageDrop = !languageDrop"
-            >
-              EN
-            </div>
+            <div class="footer-column__language-current _icon-arrow" @click="languageDrop = !languageDrop">EN</div>
             <transition name="drop-menu">
               <div v-if="languageDrop" class="footer-language__drop drop-menu">
                 <ul class="footer-language__list">
